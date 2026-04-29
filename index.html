@@ -22,7 +22,6 @@
         body { background: var(--white); color: #1a1a1a; font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6; padding-bottom: 60px; }
         .container { max-width: 650px; margin: 0 auto; padding: 0 25px; }
 
-        /* URGENCY STRIP */
         .announcement { background: var(--petal-pink); color: #fff; text-align: center; font-size: 0.65rem; font-weight: 900; padding: 12px; text-transform: uppercase; letter-spacing: 2px; }
         
         header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.98); border-bottom: 1px solid var(--border); padding: 18px 0; }
@@ -32,52 +31,32 @@
         .cart-btn { background: #000; color: #fff; border: none; padding: 12px 20px; border-radius: 14px; cursor: pointer; position: relative; font-weight: 700; font-size: 0.8rem; }
         .cart-count { position: absolute; top: -8px; right: -8px; background: var(--petal-pink); color: #fff; font-size: 0.65rem; padding: 4px 8px; border-radius: 50%; border: 2px solid #fff; }
 
-        /* BRAND STORY */
-        .brand-intro { margin-top: 30px; text-align: center; }
-        .brand-intro h1 { font-family: 'Unbounded'; font-size: 1.5rem; margin-bottom: 10px; }
-        .brand-intro p { font-size: 0.85rem; color: var(--sub-text); max-width: 80%; margin: 0 auto; }
-
         .section-header { font-family: 'Unbounded'; font-size: 0.75rem; margin: 40px 0 20px; color: var(--petal-pink); letter-spacing: 2px; border-bottom: 1px solid #f2f2f7; padding-bottom: 10px; }
         
-        /* THE MASSIVE PRODUCT CARD */
-        .card { background: var(--white); border-radius: 30px; padding: 30px; margin-bottom: 35px; border: 1.5px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+        .card { background: var(--white); border-radius: 30px; padding: 30px; margin-bottom: 25px; border: 1.5px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
         .grade-pill { font-size: 0.6rem; font-weight: 900; background: #000; color: #fff; padding: 5px 12px; border-radius: 8px; display: inline-block; margin-bottom: 15px; }
         
         h2 { margin: 0; font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; }
         .price-tag { font-size: 1.3rem; font-weight: 900; color: var(--ios-green); margin: 12px 0; display: block; }
         
-        .description-text { font-size: 0.9rem; color: var(--sub-text); margin-bottom: 20px; border-left: 3px solid var(--petal-pink); padding-left: 15px; }
-
-        /* DATA GRID */
-        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .data-item { background: #f9f9fb; padding: 12px; border-radius: 12px; border: 1px solid #eee; }
-        .data-item span { font-size: 0.65rem; color: #999; text-transform: uppercase; font-weight: 700; display: block; }
-        .data-item strong { font-size: 0.85rem; color: #222; }
-
-        /* FABRIC & CARE */
-        .care-box { font-size: 0.75rem; background: #fffcf2; border: 1px solid #e9e5d5; padding: 15px; border-radius: 15px; margin-bottom: 25px; color: #7a755e; }
+        .description-text { font-size: 0.9rem; color: var(--sub-text); margin-bottom: 25px; border-left: 3px solid var(--petal-pink); padding-left: 15px; }
         
-        .add-btn { width: 100%; background: var(--petal-pink); border: none; padding: 18px; border-radius: 20px; color: #fff; font-weight: 900; cursor: pointer; font-size: 0.95rem; box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3); }
+        .add-btn { width: 100%; background: var(--petal-pink); border: none; padding: 18px; border-radius: 20px; color: #fff; font-weight: 900; cursor: pointer; font-size: 0.95rem; }
 
-        /* POLICY INFO */
         .policy-section { background: #fff9fb; border-radius: 25px; padding: 25px; margin-top: 50px; border: 1px solid #fee; }
         .policy-section h3 { font-family: 'Unbounded'; font-size: 0.8rem; margin-top: 0; color: var(--petal-pink); }
-        .policy-grid { margin-top: 15px; }
         .policy-point { margin-bottom: 15px; }
         .policy-point strong { font-size: 0.85rem; display: block; margin-bottom: 4px; }
-        .policy-point p { font-size: 0.8rem; color: var(--sub-text); margin: 0; line-height: 1.5; }
+        .policy-point p { font-size: 0.8rem; color: var(--sub-text); margin: 0; }
 
-        /* CART DRAWER */
         .drawer { position: fixed; right: -100%; top: 0; width: 100%; height: 100%; background: var(--white); z-index: 500; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); padding: 40px 25px; overflow-y: auto; pointer-events: none; }
         .drawer.open { right: 0; pointer-events: auto; }
         
         input { width: 100%; background: #f5f5f7; border: 1.5px solid transparent; padding: 18px; border-radius: 18px; margin-bottom: 12px; outline: none; font-weight: 600; }
-        input:focus { border-color: var(--petal-pink); background: #fff; }
         
         .location-kit { background: #f0f7ff; padding: 20px; border-radius: 20px; border: 1px dashed var(--ios-blue); margin-bottom: 20px; }
         .gps-trigger { background: var(--ios-blue); color: #fff; border: none; padding: 14px; width: 100%; border-radius: 14px; font-weight: 800; cursor: pointer; }
         
-        /* MODAL */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 25px; backdrop-filter: blur(8px); }
         .modal-inner { background: #fff; padding: 35px; border-radius: 40px; text-align: center; width: 100%; max-width: 400px; }
         .mpesa-receipt { background: #f2f2f7; padding: 25px; border-radius: 25px; margin: 25px 0; border: 2px solid var(--border); }
@@ -87,7 +66,7 @@
 </head>
 <body>
 
-    <div class="announcement">Limited Archive Drop • World-Wide Curation • Nairobi Delivery</div>
+    <div class="announcement">Limited Archive Drop • Nairobi Delivery</div>
 
     <header>
         <div class="container nav-flex">
@@ -99,73 +78,37 @@
     </header>
 
     <main class="container">
-        <div class="brand-intro">
-            <h1>Hand-Picked Archives</h1>
-            <p>Every piece is authenticated, deep-cleaned, and measured by hand. We believe in high-luxury quality for the street-wear enthusiast.</p>
-        </div>
-
         <div class="section-header">ARCHIVE CATALOGUE</div>
 
         <div class="card">
-            <div class="grade-pill">CONDITION: 10/10 (LIKE NEW)</div>
+            <div class="grade-pill">CONDITION: 10/10</div>
             <h2>Vintage Star-Pattern Zip Hoodie</h2>
             <span class="price-tag">Ksh 2,800</span>
-            
-            <p class="description-text">A rare 90s archive piece featuring high-density embroidery and a heavyweight cotton fleece build. Boxy fit with distressed ribbing.</p>
-            
-            <div class="data-grid">
-                <div class="data-item"><span>Size on Tag</span><strong>Large (L)</strong></div>
-                <div class="data-item"><span>Recommended</span><strong>Oversized M / True L</strong></div>
-                <div class="data-item"><span>Pit to Pit</span><strong>24.5 Inches</strong></div>
-                <div class="data-item"><span>Length</span><strong>28 Inches</strong></div>
-                <div class="data-item"><span>Material</span><strong>100% Heavy Cotton</strong></div>
-                <div class="data-item"><span>Origin</span><strong>Japanese Curation</strong></div>
-            </div>
-
-            <div class="care-box">
-                <strong>CARE INSTRUCTIONS:</strong><br>
-                Cold wash only. Do not tumble dry. Iron inside out to protect embroidery.
-            </div>
-
+            <p class="description-text">A rare archive piece featuring high-density embroidery and a heavyweight cotton fleece build. Boxy vintage fit.</p>
             <button class="add-btn" onclick="addToCart('Vintage Star Hoodie', 2800)">Add to Cart 🛒</button>
         </div>
 
         <div class="card">
-            <div class="grade-pill">CONDITION: 9.5/10 (EXCELLENT)</div>
+            <div class="grade-pill">CONDITION: 9.5/10</div>
             <h2>90s Baggy Carpenter Denim</h2>
             <span class="price-tag">Ksh 2,100</span>
-            
-            <p class="description-text">Heavy-wash indigo denim with contrast white stitching. Features multiple utility pockets and a wide-leg vintage silhouette.</p>
-            
-            <div class="data-grid">
-                <div class="data-item"><span>Waist</span><strong>32 - 34" Adjustable</strong></div>
-                <div class="data-item"><span>Inseam</span><strong>32 Inches</strong></div>
-                <div class="data-item"><span>Leg Opening</span><strong>10 Inches (Wide)</strong></div>
-                <div class="data-item"><span>Fabric</span><strong>Non-Stretch Denim</strong></div>
-            </div>
-
+            <p class="description-text">Heavy-wash indigo denim with contrast white stitching. Features multiple utility pockets and a wide-leg silhouette.</p>
             <button class="add-btn" onclick="addToCart('Carpenter Denim', 2100)">Add to Cart 🛒</button>
         </div>
 
         <section class="policy-section">
-            <h3>🩷 STORE POLICIES & FAQ</h3>
-            <div class="policy-grid">
-                <div class="policy-point">
-                    <strong>1. The Deposit System</strong>
-                    <p>We require a 50% commitment deposit via M-Pesa to pull an item from the shop. Balance is paid to the rider upon delivery.</p>
-                </div>
-                <div class="policy-point">
-                    <strong>2. Verification Process</strong>
-                    <p>Orders are only processed once you send the M-Pesa confirmation screenshot to our official TikTok DM. No screenshot = No dispatch.</p>
-                </div>
-                <div class="policy-point">
-                    <strong>3. Nairobi Delivery Fees</strong>
-                    <p>CBD/Environs: Ksh 200. Further Estates: Ksh 300-450. Delivery happens within 2-6 hours of booking.</p>
-                </div>
-                <div class="policy-point">
-                    <strong>4. Returns & Exchanges</strong>
-                    <p>Due to the nature of thrift/archive items, all sales are final. Please check measurements carefully before booking.</p>
-                </div>
+            <h3>🩷 STORE POLICIES</h3>
+            <div class="policy-point">
+                <strong>1. 50% Booking Deposit</strong>
+                <p>Required to secure items. Paid via M-Pesa before dispatch.</p>
+            </div>
+            <div class="policy-point">
+                <strong>2. TikTok Verification</strong>
+                <p>Send your payment screenshot to our TikTok DM to confirm delivery.</p>
+            </div>
+            <div class="policy-point">
+                <strong>3. Quick Delivery</strong>
+                <p>Rider dispatched immediately after verification to your pinned location.</p>
             </div>
         </section>
 
@@ -177,47 +120,31 @@
             <h2 style="font-family:'Unbounded'; font-size:1.1rem;">YOUR BAG 🛒</h2>
             <button onclick="toggleCart()" style="background:none; border:none; font-size:2.5rem; cursor:pointer;">&times;</button>
         </div>
-        
         <div id="cart-list"></div>
-
         <div id="checkout-form" style="display:none; margin-top:30px;">
-            <h4 style="font-size:0.8rem; text-transform:uppercase; color:var(--petal-pink);">Delivery Details</h4>
-            <input type="text" id="cust-name" placeholder="Your Name">
-            
+            <input type="text" id="cust-name" placeholder="Enter Your Name">
             <div class="location-kit">
                 <button class="gps-trigger" id="gpsBtn" onclick="getLocation()">📍 PIN GPS LOCATION</button>
-                <p id="geo-status" style="display:none; color:var(--ios-green); font-size:0.75rem; font-weight:800; text-align:center; margin: 10px 0;">✓ GPS COORDINATES SECURED</p>
-                <input type="text" id="cust-loc" placeholder="House No / Apartment / Landmark" style="margin-top:10px;">
+                <input type="text" id="cust-loc" placeholder="Estate / House Number" style="margin-top:10px;">
             </div>
-
             <div style="background: #fff9fb; padding: 25px; border-radius: 25px; border: 1.5px solid var(--petal-pink); text-align:center;">
-                <p style="margin:0; font-size:0.7rem; color:var(--sub-text);">AMOUNT TO BOOK NOW (50%):</p>
                 <span style="font-weight:900; font-size:1.5rem; color:var(--ios-green);" id="dep-total">Ksh 0</span>
             </div>
-            
-            <button class="add-btn" style="margin-top:25px;" onclick="openPayment()">PROCEED TO SECURE BOOKING</button>
+            <button class="add-btn" style="margin-top:25px;" onclick="openPayment()">PROCEED TO BOOKING</button>
         </div>
     </div>
 
     <div class="modal" id="payModal">
         <div class="modal-inner">
-            <h3 style="font-family:'Unbounded'; font-size:0.9rem; margin-top:0;">M-PESA PAYMENT</h3>
-            <p style="font-size:0.8rem; color:var(--sub-text);">Please send the deposit amount to the administrator below:</p>
-            
+            <h3 style="font-family:'Unbounded'; font-size:0.9rem;">M-PESA PAYMENT</h3>
             <div class="mpesa-receipt">
-                <small style="font-weight:800; color:#999;">TILL / PHONE NUMBER:</small>
-                <div style="font-size: 1.8rem; font-weight: 900; letter-spacing:1px;" id="phoneDisp">07XXXXXXXX</div>
-                <div style="font-size: 0.9rem; margin-top:5px;">NAME: <strong>[YOUR FULL NAME]</strong></div>
+                <div style="font-size: 1.8rem; font-weight: 900;" id="phoneDisp">07XXXXXXXX</div>
+                <div style="font-size: 0.9rem; margin-top:5px;">NAME: <strong>[YOUR NAME]</strong></div>
             </div>
-
-            <div style="margin-bottom:20px;">
-                <span style="display:block; font-size:0.7rem; color:#999;">PAY EXACTLY:</span>
-                <strong id="payAmt" style="font-size: 1.4rem; color:var(--ios-green);">Ksh 0</strong>
-            </div>
-
-            <button class="add-btn" onclick="copyAndDial()">COPY NUMBER & PAY</button>
-            <button class="add-btn" style="background:#000; margin-top:12px;" onclick="window.location.href='https://www.tiktok.com/@yourusername'">SEND DM ON TIKTOK</button>
-            <button onclick="document.getElementById('payModal').style.display='none'" style="background:none; border:none; color:#999; margin-top:20px; cursor:pointer; font-weight:700; font-size:0.8rem;">GO BACK TO BAG</button>
+            <strong id="payAmt" style="font-size: 1.4rem; color:var(--ios-green);">Ksh 0</strong>
+            <button class="add-btn" style="margin-top:20px;" onclick="copyAndDial()">COPY & PAY</button>
+            <button class="add-btn" style="background:#000; margin-top:12px;" onclick="window.location.href='https://www.tiktok.com/@yourusername'">DM SCREENSHOT</button>
+            <button onclick="document.getElementById('payModal').style.display='none'" style="background:none; border:none; color:#999; margin-top:20px; cursor:pointer;">GO BACK</button>
         </div>
     </div>
 
@@ -237,24 +164,18 @@
             const list = document.getElementById('cart-list');
             const form = document.getElementById('checkout-form');
             document.getElementById('count').innerText = bag.length;
-            
             if(bag.length === 0) {
-                list.innerHTML = `<p style="text-align:center; color:#ccc; margin-top:60px; font-size:0.9rem;">Your shopping bag is empty.</p>`;
+                list.innerHTML = `<p style="text-align:center; color:#ccc; margin-top:60px;">Your bag is empty.</p>`;
                 form.style.display = 'none';
                 return;
             }
-            
             form.style.display = 'block';
             list.innerHTML = bag.map((item, i) => `
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; background:#fff; padding:20px; border-radius:20px; border: 1px solid #f2f2f7;">
-                    <div>
-                        <div style="font-weight:800; font-size:0.95rem;">${item.name}</div>
-                        <div style="color:var(--ios-green); font-weight:700; font-size:0.85rem;">Ksh ${item.price}</div>
-                    </div>
-                    <button onclick="removeItem(${i})" style="color:var(--petal-pink); background:none; border:none; cursor:pointer; font-weight:800; font-size:0.75rem; text-decoration:underline;">REMOVE</button>
+                    <div><div style="font-weight:800;">${item.name}</div><div style="color:var(--ios-green);">Ksh ${item.price}</div></div>
+                    <button onclick="removeItem(${i})" style="color:var(--petal-pink); background:none; border:none; cursor:pointer; font-weight:800;">REMOVE</button>
                 </div>
             `).join('');
-            
             let total = bag.reduce((s, i) => s + i.price, 0);
             document.getElementById('dep-total').innerText = `Ksh ${total / 2}`;
             document.getElementById('payAmt').innerText = `Ksh ${total / 2}`;
@@ -265,23 +186,20 @@
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition((pos) => {
-                    document.getElementById('geo-status').style.display = "block";
                     document.getElementById('gpsBtn').style.background = "#34c759";
                     document.getElementById('gpsBtn').innerText = "✓ LOCATION PINNED";
-                }, () => alert("Please enable GPS for delivery."));
+                }, () => alert("Enable GPS for delivery."));
             }
         }
 
         function openPayment() {
-            const user = document.getElementById('cust-name').value;
-            const loc = document.getElementById('cust-loc').value;
-            if(!user || !loc) return alert("Security Check: Please provide your TikTok username and Location details.");
+            if(!document.getElementById('cust-name').value || !document.getElementById('cust-loc').value) return alert("Fill in your info first!");
             document.getElementById('payModal').style.display = 'flex';
         }
 
         function copyAndDial() {
             navigator.clipboard.writeText(adminPhone);
-            alert("M-Pesa Number Copied to Clipboard!");
+            alert("Number Copied!");
             window.location.href = "tel:*334#";
         }
     </script>
