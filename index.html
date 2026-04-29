@@ -10,72 +10,80 @@
 
     <style>
         :root {
-            --ios-bg: #000;
-            --ios-card: #1c1c1e;
-            --ios-blue: #0a84ff;
-            --ios-pink: #ff375f;
-            --ios-orange: #ff9f0a;
-            --ios-green: #32d74b;
-            --gradient: linear-gradient(135deg, #ff375f 0%, #ff9f0a 100%);
+            /* NEW PINK & WHITE PALETTE */
+            --bg: #ffffff;
+            --card-bg: #fff0f5; /* Very pale pink for subtle card contrast */
+            --text-main: #333333;
+            --text-secondary: #757575;
+            --petal-pink: #ff69b4; /* 🩷 Bright Hot Pink */
+            --ios-blue: #007aff; /* Keeping blue for standard interactive elements like GPS */
+            --ios-green: #34c759; /* Keeping green for success/money states */
+            --border: #e0e0e0;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--ios-bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; line-height: 1.5; }
+        body { background: var(--bg); color: var(--text-main); font-family: 'Inter', sans-serif; margin: 0; line-height: 1.5; }
         .container { max-width: 600px; margin: 0 auto; padding: 0 20px; }
 
-        .announcement { background: var(--gradient); color: #000; text-align: center; font-size: 0.7rem; font-weight: 800; padding: 10px; text-transform: uppercase; }
+        /* VIBRANT TOP BAR */
+        .announcement { background: var(--petal-pink); color: #fff; text-align: center; font-size: 0.7rem; font-weight: 800; padding: 10px; text-transform: uppercase; }
         
-        header { position: sticky; top: 0; z-index: 100; background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); border-bottom: 0.5px solid #38383a; padding: 15px 0; }
+        header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 15px 0; }
         .nav-flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Unbounded'; font-size: 1.2rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo { font-family: 'Unbounded'; font-size: 1.2rem; color: var(--petal-pink); }
 
-        .cart-btn { background: #2c2c2e; border: none; color: #fff; padding: 10px 18px; border-radius: 15px; cursor: pointer; position: relative; font-weight: 600; }
-        .cart-count { position: absolute; top: -5px; right: -5px; background: var(--ios-blue); font-size: 0.6rem; padding: 3px 7px; border-radius: 10px; }
+        .cart-btn { background: #f2f2f7; border: none; color: var(--text-main); padding: 10px 18px; border-radius: 15px; cursor: pointer; position: relative; font-weight: 600; }
+        .cart-count { position: absolute; top: -5px; right: -5px; background: var(--petal-pink); color: #fff; font-size: 0.6rem; padding: 3px 7px; border-radius: 10px; }
 
-        .info-strip { background: var(--ios-card); border-radius: 20px; padding: 15px; margin: 20px 0; display: flex; gap: 15px; align-items: center; border: 0.5px solid #38383a; }
-        .info-strip i { font-size: 1.2rem; color: var(--ios-blue); }
-        .info-strip div h4 { margin: 0; font-size: 0.8rem; }
-        .info-strip div p { margin: 0; font-size: 0.7rem; color: #8e8e93; }
+        .info-strip { background: var(--card-bg); border-radius: 20px; padding: 15px; margin: 20px 0; display: flex; gap: 15px; align-items: center; border: 1px solid var(--petal-pink); }
+        .info-strip i { font-size: 1.2rem; color: var(--petal-pink); }
+        .info-strip div h4 { margin: 0; font-size: 0.8rem; color: var(--petal-pink); }
+        .info-strip div p { margin: 0; font-size: 0.7rem; color: var(--text-secondary); }
 
-        .section-title { font-family: 'Unbounded'; font-size: 0.9rem; margin: 30px 0 15px; color: var(--ios-orange); letter-spacing: 1px; }
+        .section-title { font-family: 'Unbounded'; font-size: 0.9rem; margin: 30px 0 15px; color: var(--petal-pink); letter-spacing: 1px; text-align: center;}
         
         /* PRODUCT CARDS */
-        .card { background: var(--ios-card); border-radius: 25px; padding: 25px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .card { background: #fff; border-radius: 25px; padding: 25px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
-        .grade { font-size: 0.6rem; font-weight: 800; background: #fff; color: #000; padding: 3px 8px; border-radius: 5px; }
+        .grade { font-size: 0.6rem; font-weight: 800; background: var(--petal-pink); color: #fff; padding: 4px 9px; border-radius: 6px; }
         
-        h2 { margin: 0; font-size: 1.3rem; font-weight: 800; }
+        h2 { margin: 0; font-size: 1.3rem; font-weight: 800; color: var(--text-main); }
         .price { font-size: 1.2rem; font-weight: 800; color: var(--ios-green); margin: 10px 0; }
         
-        .details-box { background: rgba(0,0,0,0.3); border-radius: 15px; padding: 15px; margin-bottom: 20px; font-size: 0.8rem; }
-        .details-box div { display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 0.5px solid #2c2c2e; padding-bottom: 5px; }
-        .details-box span { color: #8e8e93; }
+        .details-box { background: #f9f9f9; border-radius: 15px; padding: 15px; margin-bottom: 20px; font-size: 0.8rem; border: 1px solid var(--border); }
+        .details-box div { display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+        .details-box span { color: var(--text-secondary); }
 
-        .add-btn { width: 100%; background: var(--gradient); border: none; padding: 16px; border-radius: 18px; color: #000; font-weight: 800; cursor: pointer; font-size: 0.9rem; }
+        .add-btn { width: 100%; background: var(--petal-pink); border: none; padding: 16px; border-radius: 18px; color: #fff; font-weight: 800; cursor: pointer; font-size: 0.9rem; transition: background 0.2s; }
+        .add-btn:hover { background: #ff1493; /* Deeper hot pink on hover */ }
 
-        /* DETAILED INFO BOXES (The missing info) */
-        .faq-box { margin-top: 40px; border-top: 0.5px solid #38383a; padding-top: 30px; }
-        .faq-box h3 { font-family: 'Unbounded'; font-size: 0.8rem; margin-bottom: 20px; color: #fff; }
-        .faq-item { margin-bottom: 25px; background: rgba(255,255,255,0.02); padding: 15px; border-radius: 15px; }
-        .faq-item h4 { font-size: 0.85rem; margin: 0 0 8px 0; color: var(--ios-blue); display: flex; align-items: center; gap: 8px; }
-        .faq-item p { font-size: 0.8rem; color: #8e8e93; margin: 0; line-height: 1.6; }
+        /* DETAILED INFO BOXES */
+        .faq-box { margin-top: 40px; border-top: 1px solid var(--border); padding-top: 30px; }
+        .faq-box h3 { font-family: 'Unbounded'; font-size: 0.8rem; margin-bottom: 20px; color: var(--text-main); text-align: center; }
+        .faq-item { margin-bottom: 25px; background: var(--card-bg); padding: 18px; border-radius: 18px; border: 1px solid var(--border); }
+        .faq-item h4 { font-size: 0.85rem; margin: 0 0 8px 0; color: var(--petal-pink); display: flex; align-items: center; gap: 8px; }
+        .faq-item p { font-size: 0.8rem; color: var(--text-secondary); margin: 0; line-height: 1.6; }
 
         /* CART DRAWER */
-        .drawer { position: fixed; right: -100%; top: 0; width: 100%; height: 100%; background: var(--ios-bg); z-index: 200; transition: 0.3s; padding: 30px; overflow-y: auto; }
+        .drawer { position: fixed; right: -100%; top: 0; width: 100%; height: 100%; background: #fff; z-index: 200; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding: 30px; overflow-y: auto; border-left: 1px solid var(--border); }
         .drawer.open { right: 0; }
         
-        input { width: 100%; background: var(--ios-card); border: 1px solid #38383a; padding: 15px; border-radius: 15px; color: #fff; margin-bottom: 10px; outline: none; font-size: 0.9rem; }
-        
+        input, select { width: 100%; background: #f9f9f9; border: 1px solid var(--border); padding: 15px; border-radius: 15px; color: var(--text-main); margin-bottom: 10px; outline: none; font-size: 0.9rem; }
+        input:focus, select:focus { border-color: var(--petal-pink); background: #fff; }
+
         /* LOCATION PICKER */
-        .location-container { background: #1c1c1e; padding: 15px; border-radius: 15px; border: 1px solid #38383a; margin-bottom: 15px; }
+        .location-container { background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 15px; }
         .pin-btn { background: var(--ios-blue); color: #fff; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: 700; font-size: 0.8rem; margin-bottom: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
         
         /* MODAL */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-        .modal-inner { background: #1c1c1e; padding: 30px; border-radius: 35px; text-align: center; width: 100%; max-width: 360px; border: 0.5px solid #38383a; }
-        .mpesa-card { background: #fff; color: #000; padding: 20px; border-radius: 20px; margin: 20px 0; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; backdrop-filter: blur(5px); }
+        .modal-inner { background: #fff; padding: 30px; border-radius: 35px; text-align: center; width: 100%; max-width: 360px; border: 1px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.1); animation: iosPop 0.3s ease-out; }
+        @keyframes iosPop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        .nockturnal { text-align: center; padding: 60px 0; font-size: 0.65rem; letter-spacing: 5px; color: #48484a; font-weight: 800; text-transform: uppercase; }
+        .mpesa-card { background: #f2f2f7; color: var(--text-main); padding: 20px; border-radius: 20px; margin: 20px 0; border: 1px solid var(--border); }
+        .mpesa-card strong { color: var(--petal-pink); }
+
+        .nockturnal { text-align: center; padding: 60px 0 40px; font-size: 0.65rem; letter-spacing: 5px; color: var(--text-secondary); font-weight: 800; text-transform: uppercase; opacity: 0.7; }
     </style>
 </head>
 <body>
@@ -106,7 +114,7 @@
         <div class="card">
             <div class="item-header">
                 <span class="grade">GRADE 10/10</span>
-                <span style="font-size: 0.7rem; color: var(--ios-blue);">AVAILABLE</span>
+                <span style="font-size: 0.7rem; color: var(--petal-pink); font-weight:600;">AVAILABLE</span>
             </div>
             <h2>Vintage Star-Pattern Zip Hoodie</h2>
             <div class="price">Ksh 2,800</div>
@@ -121,7 +129,7 @@
         <div class="card">
             <div class="item-header">
                 <span class="grade">GRADE 9.5/10</span>
-                <span style="font-size: 0.7rem; color: var(--ios-blue);">AVAILABLE</span>
+                <span style="font-size: 0.7rem; color: var(--petal-pink); font-weight:600;">AVAILABLE</span>
             </div>
             <h2>90s Baggy Carpenter Denim</h2>
             <div class="price">Ksh 2,100</div>
@@ -137,22 +145,22 @@
             
             <div class="faq-item">
                 <h4><i class="fa-solid fa-1"></i> Pay 50% Deposit</h4>
-                <p>Secure your piece by paying half. We do not reserve items without a deposit to avoid "ghost" bookings.</p>
+                <p>Secure your piece by paying half upfront. We do not reserve items without a deposit to avoid "ghost" bookings.</p>
             </div>
 
             <div class="faq-item">
                 <h4><i class="fa-solid fa-2"></i> Verify on TikTok</h4>
-                <p>After M-Pesa, send your payment screenshot to our TikTok DM. This is how we confirm your order before dispatch.</p>
+                <p>After M-Pesa, send your payment screenshot to our TikTok DM. We must confirm payment before dispatching the rider.</p>
             </div>
 
             <div class="faq-item">
                 <h4><i class="fa-solid fa-3"></i> Delivery Pricing</h4>
-                <p>Nairobi rider delivery ranges from Ksh 200 - 350 depending on your pinned location. Pay this + the item balance to the rider.</p>
+                <p>Nairobi rider delivery ranges from Ksh 200 - 350 based on your pinned location. Pay this + the item balance to the rider on arrival.</p>
             </div>
 
             <div class="faq-item">
                 <h4><i class="fa-solid fa-star"></i> Item Quality</h4>
-                <p>Every piece is sanitized and grade-checked. Grade 10/10 means no flaws. Grade 9/10 means minor vintage character.</p>
+                <p>Every piece is sanitized and grade-checked. Grade 10/10 means near perfect. Grade 9/10 means excellent vintage condition.</p>
             </div>
         </section>
 
@@ -161,8 +169,8 @@
 
     <div class="drawer" id="cart">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
-            <h2 style="font-family:'Unbounded'; font-size:1rem;">Your Cart 🛒</h2>
-            <button onclick="toggleCart()" style="background:none; border:none; color:#fff; font-size:2rem;">&times;</button>
+            <h2 style="font-family:'Unbounded'; font-size:1rem; color:var(--petal-pink);">Your Cart 🛒</h2>
+            <button onclick="toggleCart()" style="background:none; border:none; color:var(--text-main); font-size:2rem; cursor:pointer;">&times;</button>
         </div>
 
         <div id="cart-list"></div>
@@ -171,7 +179,7 @@
             <input type="text" id="cust-name" placeholder="TikTok Username">
             
             <div class="location-container">
-                <p style="font-size: 0.7rem; margin-top: 0; color: var(--ios-blue); font-weight: 800;">DROP-OFF LOCATION</p>
+                <p style="font-size: 0.7rem; margin-top: 0; color: var(--petal-pink); font-weight: 800;">DROP-OFF LOCATION</p>
                 <button class="pin-btn" onclick="getLocation()">
                     <i class="fa-solid fa-location-crosshairs"></i> Pin My GPS Location
                 </button>
@@ -179,35 +187,39 @@
                 <p id="geo-status" style="font-size: 0.65rem; color: var(--ios-green); margin: 0; display: none; text-align: center; font-weight: 600;">✓ GPS Coordinates Locked</p>
             </div>
 
-            <div style="background: var(--ios-card); padding: 20px; border-radius: 20px; border: 1px solid #38383a;">
+            <div style="background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid var(--petal-pink);">
                 <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.1rem; color:var(--ios-green);">
                     <span>Pay Now (50%):</span>
                     <span id="dep-total">Ksh 0</span>
                 </div>
             </div>
 
-            <button class="add-btn" style="margin-top:20px; background:#fff;" onclick="openPayment()">Pay & Verify on TikTok</button>
+            <button class="add-btn" style="margin-top:20px;" onclick="openPayment()">Pay & Verify on TikTok</button>
         </div>
     </div>
 
     <div class="modal" id="payModal">
         <div class="modal-inner">
-            <h3 style="margin:0">Pay Deposit</h3>
+            <h3 style="margin:0; color:var(--text-main);">Pay Deposit</h3>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 5px 0 0 0;">Reservation valid for 15 mins.</p>
             <div class="mpesa-card">
-                <div style="font-size: 0.6rem; font-weight: 800; color: #8e8e93;">SEND M-PESA TO:</div>
+                <div style="font-size: 0.6rem; font-weight: 800; color: var(--text-secondary);">SEND M-PESA TO:</div>
                 <div style="font-size: 1.5rem; font-weight: 900;" id="phoneDisp">07XXXXXXXX</div>
                 <div style="font-size: 0.7rem; margin-top: 5px;">Admin: <strong>[YOUR NAME]</strong></div>
             </div>
-            <p style="font-size: 0.8rem; margin-bottom: 20px;">Deposit Amount: <strong id="payAmt" style="color:var(--ios-green)">Ksh 0</strong></p>
-            <button class="add-btn" style="background:var(--ios-blue); color:#fff; margin-bottom:10px;" onclick="copyAndDial()">Copy & Pay</button>
-            <button class="add-btn" style="background:#000; color:#fff; border:1px solid #fff;" onclick="tiktokVerify()">DM Screenshot on TikTok</button>
-            <button onclick="document.getElementById('payModal').style.display='none'" style="background:none; border:none; color:#8e8e93; margin-top:15px; font-weight:600;">Cancel</button>
+            <p style="font-size: 0.8rem; margin-bottom: 20px; color:var(--text-main);">Deposit Amount: <strong id="payAmt" style="color:var(--ios-green)">Ksh 0</strong></p>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <button class="add-btn" style="background:var(--petal-pink);" onclick="copyAndDial()">Copy & Pay</button>
+                <button class="add-btn" style="background:#000; border:1px solid #000;" onclick="tiktokVerify()">DM Screenshot on TikTok</button>
+                <button onclick="document.getElementById('payModal').style.display='none'" style="background:none; border:none; color:var(--text-secondary); margin-top:10px; font-weight:600; cursor:pointer;">Cancel</button>
+            </div>
         </div>
     </div>
 
     <script>
         let bag = [];
-        const adminPhone = "07XXXXXXXX";
+        const adminPhone = "07XXXXXXXX"; // replace
+        const tiktokHandle = "yourusername"; // replace
         let capturedCoords = "";
 
         function toggleCart() { document.getElementById('cart').classList.toggle('open'); }
@@ -223,17 +235,17 @@
             const form = document.getElementById('checkout-form');
             document.getElementById('count').innerText = bag.length;
             if(bag.length === 0) {
-                list.innerHTML = `<p style="text-align:center; color:#48484a; margin-top: 50px;">Your cart is empty.</p>`;
+                list.innerHTML = `<p style="text-align:center; color:var(--text-secondary); margin-top: 50px;">Your cart is empty.</p>`;
                 form.style.display = 'none';
                 return;
             }
             form.style.display = 'block';
             list.innerHTML = bag.map((item, index) => `
-                <div style="display:flex; justify-content:space-between; margin-bottom:10px; background:#1c1c1e; padding:12px; border-radius:12px;">
-                    <span>${item.name}</span>
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px; background:#f9f9f9; padding:15px; border-radius:15px; border:1px solid var(--border);">
+                    <span style="color:var(--text-main); font-weight:600;">${item.name}</span>
                     <div style="text-align:right">
-                        <strong>Ksh ${item.price}</strong><br>
-                        <small onclick="removeItem(${index})" style="color:var(--ios-pink); cursor:pointer">Remove</small>
+                        <strong style="color:var(--text-main);">Ksh ${item.price}</strong><br>
+                        <small onclick="removeItem(${index})" style="color:var(--petal-pink); cursor:pointer; font-weight:600;">Remove</small>
                     </div>
                 </div>
             `).join('');
@@ -255,11 +267,13 @@
                 navigator.geolocation.getCurrentPosition((pos) => {
                     capturedCoords = `Lat: ${pos.coords.latitude}, Lon: ${pos.coords.longitude}`;
                     status.innerText = "✓ GPS Coordinates Locked";
+                    status.style.color = var(--ios-green);
                     document.querySelector('.pin-btn').innerHTML = "✓ Location Pinned";
-                    document.querySelector('.pin-btn').style.background = "#32d74b";
+                    document.querySelector('.pin-btn').style.background = var(--ios-green);
                 }, () => {
                     alert("Please enable GPS/Location access.");
                     status.innerText = "GPS Access Denied";
+                    status.style.color = var(--petal-pink);
                 });
             }
         }
@@ -271,8 +285,7 @@
         }
 
         function tiktokVerify() {
-            // Replace 'yourusername' with your actual TikTok handle
-            window.location.href = "https://www.tiktok.com/@yourusername";
+            window.location.href = `https://www.tiktok.com/@${tiktokHandle}`;
         }
 
         function copyAndDial() {
