@@ -1,185 +1,285 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Neural Interface</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petal Thrift | Curated Luxury Nairobi</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-<style>
-body {
-    margin: 0;
-    font-family: monospace;
-    background: black;
-    color: #00ff55;
-    text-align: center;
-    overflow: hidden;
-    user-select: none;
-    touch-action: none; /* Helps prevent some swipe gestures */
-}
+    <style>
+        :root {
+            --ios-bg: #000;
+            --ios-card: #1c1c1e;
+            --ios-blue: #0a84ff;
+            --ios-pink: #ff375f;
+            --ios-orange: #ff9f0a;
+            --ios-green: #32d74b;
+            --gradient: linear-gradient(135deg, #ff375f 0%, #ff9f0a 100%);
+        }
 
-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-}
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--ios-bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; line-height: 1.5; }
+        .container { max-width: 600px; margin: 0 auto; padding: 0 20px; }
 
-.box {
-    margin-top: 120px;
-}
+        .announcement { background: var(--gradient); color: #000; text-align: center; font-size: 0.7rem; font-weight: 800; padding: 10px; text-transform: uppercase; }
+        
+        header { position: sticky; top: 0; z-index: 100; background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); border-bottom: 0.5px solid #38383a; padding: 15px 0; }
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Unbounded'; font-size: 1.2rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-.panel {
-    display: inline-block;
-    background: rgba(0,0,0,0.9);
-    padding: 25px;
-    border: 1px solid #00ff55;
-    border-radius: 10px;
-    min-width: 320px;
-    box-shadow: 0 0 20px #00ff55;
-}
+        .cart-btn { background: #2c2c2e; border: none; color: #fff; padding: 10px 18px; border-radius: 15px; cursor: pointer; position: relative; font-weight: 600; }
+        .cart-count { position: absolute; top: -5px; right: -5px; background: var(--ios-blue); font-size: 0.6rem; padding: 3px 7px; border-radius: 10px; }
 
-.start-btn {
-    padding: 15px 30px;
-    background: transparent;
-    color: #00ff55;
-    border: 1px solid #00ff55;
-    font-weight: bold;
-    cursor: pointer;
-    font-family: monospace;
-    text-transform: uppercase;
-}
+        .info-strip { background: var(--ios-card); border-radius: 20px; padding: 15px; margin: 20px 0; display: flex; gap: 15px; align-items: center; border: 0.5px solid #38383a; }
+        .info-strip i { font-size: 1.2rem; color: var(--ios-blue); }
+        .info-strip div h4 { margin: 0; font-size: 0.8rem; }
+        .info-strip div p { margin: 0; font-size: 0.7rem; color: #8e8e93; }
 
-.exit-btn {
-    margin-top: 20px;
-    background: #00ff55;
-    color: black;
-    border: none;
-    padding: 12px 24px;
-    font-weight: bold;
-    font-size: 1.1em;
-    cursor: pointer;
-    border-radius: 5px;
-}
+        .section-title { font-family: 'Unbounded'; font-size: 0.9rem; margin: 30px 0 15px; color: var(--ios-orange); letter-spacing: 1px; }
+        
+        /* PRODUCT CARDS */
+        .card { background: var(--ios-card); border-radius: 25px; padding: 25px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .grade { font-size: 0.6rem; font-weight: 800; background: #fff; color: #000; padding: 3px 8px; border-radius: 5px; }
+        
+        h2 { margin: 0; font-size: 1.3rem; font-weight: 800; }
+        .price { font-size: 1.2rem; font-weight: 800; color: var(--ios-green); margin: 10px 0; }
+        
+        .details-box { background: rgba(0,0,0,0.3); border-radius: 15px; padding: 15px; margin-bottom: 20px; font-size: 0.8rem; }
+        .details-box div { display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 0.5px solid #2c2c2e; padding-bottom: 5px; }
+        .details-box span { color: #8e8e93; }
 
-@keyframes shake {
-    0% { transform: translate(0px, 0px); }
-    25% { transform: translate(2px, -2px); }
-    50% { transform: translate(-2px, 2px); }
-    75% { transform: translate(2px, 2px); }
-    100% { transform: translate(0px, 0px); }
-}
+        .add-btn { width: 100%; background: var(--gradient); border: none; padding: 16px; border-radius: 18px; color: #000; font-weight: 800; cursor: pointer; font-size: 0.9rem; }
 
-.shake {
-    animation: shake 0.1s infinite;
-}
-</style>
+        /* DETAILED INFO BOXES (The missing info) */
+        .faq-box { margin-top: 40px; border-top: 0.5px solid #38383a; padding-top: 30px; }
+        .faq-box h3 { font-family: 'Unbounded'; font-size: 0.8rem; margin-bottom: 20px; color: #fff; }
+        .faq-item { margin-bottom: 25px; background: rgba(255,255,255,0.02); padding: 15px; border-radius: 15px; }
+        .faq-item h4 { font-size: 0.85rem; margin: 0 0 8px 0; color: var(--ios-blue); display: flex; align-items: center; gap: 8px; }
+        .faq-item p { font-size: 0.8rem; color: #8e8e93; margin: 0; line-height: 1.6; }
+
+        /* CART DRAWER */
+        .drawer { position: fixed; right: -100%; top: 0; width: 100%; height: 100%; background: var(--ios-bg); z-index: 200; transition: 0.3s; padding: 30px; overflow-y: auto; }
+        .drawer.open { right: 0; }
+        
+        input { width: 100%; background: var(--ios-card); border: 1px solid #38383a; padding: 15px; border-radius: 15px; color: #fff; margin-bottom: 10px; outline: none; font-size: 0.9rem; }
+        
+        /* LOCATION PICKER */
+        .location-container { background: #1c1c1e; padding: 15px; border-radius: 15px; border: 1px solid #38383a; margin-bottom: 15px; }
+        .pin-btn { background: var(--ios-blue); color: #fff; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: 700; font-size: 0.8rem; margin-bottom: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        
+        /* MODAL */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+        .modal-inner { background: #1c1c1e; padding: 30px; border-radius: 35px; text-align: center; width: 100%; max-width: 360px; border: 0.5px solid #38383a; }
+        .mpesa-card { background: #fff; color: #000; padding: 20px; border-radius: 20px; margin: 20px 0; }
+
+        .nockturnal { text-align: center; padding: 60px 0; font-size: 0.65rem; letter-spacing: 5px; color: #48484a; font-weight: 800; text-transform: uppercase; }
+    </style>
 </head>
-
 <body>
 
-<canvas id="matrix"></canvas>
+    <div class="announcement">NAIROBI EXCLUSIVE • PRIVATE RIDER DROPS</div>
 
-<div class="box">
-    <div class="panel" id="panel">
-        <h2>NEURAL INTERFACE ACTIVE</h2>
-        <p>Biometric Authentication Required</p>
-        <button class="start-btn" onclick="start()">START SCAN</button>
+    <header>
+        <div class="container nav-flex">
+            <div class="logo">PETAL THRIFT</div>
+            <button class="cart-btn" onclick="toggleCart()">
+                CART 🛒 <span id="count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <div class="info-strip">
+            <i class="fa-solid fa-motorcycle"></i>
+            <div>
+                <h4>Direct Drop-off</h4>
+                <p>Delivered by our in-house rider to your pin.</p>
+            </div>
+        </div>
+
+        <div class="section-title">CURRENT COLLECTION</div>
+
+        <div class="card">
+            <div class="item-header">
+                <span class="grade">GRADE 10/10</span>
+                <span style="font-size: 0.7rem; color: var(--ios-blue);">AVAILABLE</span>
+            </div>
+            <h2>Vintage Star-Pattern Zip Hoodie</h2>
+            <div class="price">Ksh 2,800</div>
+            <div class="details-box">
+                <div><span>Size</span> <strong>Fits M/L</strong></div>
+                <div><span>Pit to Pit</span> <strong>23"</strong></div>
+                <div><span>Length</span> <strong>27"</strong></div>
+            </div>
+            <button class="add-btn" onclick="addToCart('Star Zip Hoodie', 2800)">Add to Cart 🛒</button>
+        </div>
+
+        <div class="card">
+            <div class="item-header">
+                <span class="grade">GRADE 9.5/10</span>
+                <span style="font-size: 0.7rem; color: var(--ios-blue);">AVAILABLE</span>
+            </div>
+            <h2>90s Baggy Carpenter Denim</h2>
+            <div class="price">Ksh 2,100</div>
+            <div class="details-box">
+                <div><span>Waist</span> <strong>32 - 34"</strong></div>
+                <div><span>Style</span> <strong>Baggy Fit</strong></div>
+            </div>
+            <button class="add-btn" onclick="addToCart('Carpenter Denim', 2100)">Add to Cart 🛒</button>
+        </div>
+
+        <section class="faq-box">
+            <h3>ORDERING & DELIVERY</h3>
+            
+            <div class="faq-item">
+                <h4><i class="fa-solid fa-1"></i> Pay 50% Deposit</h4>
+                <p>Secure your piece by paying half. We do not reserve items without a deposit to avoid "ghost" bookings.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4><i class="fa-solid fa-2"></i> Verify on TikTok</h4>
+                <p>After M-Pesa, send your payment screenshot to our TikTok DM. This is how we confirm your order before dispatch.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4><i class="fa-solid fa-3"></i> Delivery Pricing</h4>
+                <p>Nairobi rider delivery ranges from Ksh 200 - 350 depending on your pinned location. Pay this + the item balance to the rider.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4><i class="fa-solid fa-star"></i> Item Quality</h4>
+                <p>Every piece is sanitized and grade-checked. Grade 10/10 means no flaws. Grade 9/10 means minor vintage character.</p>
+            </div>
+        </section>
+
+        <div class="nockturnal">POWERED BY NOCKTURNAL</div>
+    </main>
+
+    <div class="drawer" id="cart">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+            <h2 style="font-family:'Unbounded'; font-size:1rem;">Your Cart 🛒</h2>
+            <button onclick="toggleCart()" style="background:none; border:none; color:#fff; font-size:2rem;">&times;</button>
+        </div>
+
+        <div id="cart-list"></div>
+
+        <div id="checkout-form" style="display:none; margin-top:20px;">
+            <input type="text" id="cust-name" placeholder="TikTok Username">
+            
+            <div class="location-container">
+                <p style="font-size: 0.7rem; margin-top: 0; color: var(--ios-blue); font-weight: 800;">DROP-OFF LOCATION</p>
+                <button class="pin-btn" onclick="getLocation()">
+                    <i class="fa-solid fa-location-crosshairs"></i> Pin My GPS Location
+                </button>
+                <input type="text" id="cust-loc" placeholder="Estate / Hse No / Landmark">
+                <p id="geo-status" style="font-size: 0.65rem; color: var(--ios-green); margin: 0; display: none; text-align: center; font-weight: 600;">✓ GPS Coordinates Locked</p>
+            </div>
+
+            <div style="background: var(--ios-card); padding: 20px; border-radius: 20px; border: 1px solid #38383a;">
+                <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.1rem; color:var(--ios-green);">
+                    <span>Pay Now (50%):</span>
+                    <span id="dep-total">Ksh 0</span>
+                </div>
+            </div>
+
+            <button class="add-btn" style="margin-top:20px; background:#fff;" onclick="openPayment()">Pay & Verify on TikTok</button>
+        </div>
     </div>
-</div>
 
-<script>
-/* --- HARD LOCK LOGIC --- */
-let isLocked = true;
+    <div class="modal" id="payModal">
+        <div class="modal-inner">
+            <h3 style="margin:0">Pay Deposit</h3>
+            <div class="mpesa-card">
+                <div style="font-size: 0.6rem; font-weight: 800; color: #8e8e93;">SEND M-PESA TO:</div>
+                <div style="font-size: 1.5rem; font-weight: 900;" id="phoneDisp">07XXXXXXXX</div>
+                <div style="font-size: 0.7rem; margin-top: 5px;">Admin: <strong>[YOUR NAME]</strong></div>
+            </div>
+            <p style="font-size: 0.8rem; margin-bottom: 20px;">Deposit Amount: <strong id="payAmt" style="color:var(--ios-green)">Ksh 0</strong></p>
+            <button class="add-btn" style="background:var(--ios-blue); color:#fff; margin-bottom:10px;" onclick="copyAndDial()">Copy & Pay</button>
+            <button class="add-btn" style="background:#000; color:#fff; border:1px solid #fff;" onclick="tiktokVerify()">DM Screenshot on TikTok</button>
+            <button onclick="document.getElementById('payModal').style.display='none'" style="background:none; border:none; color:#8e8e93; margin-top:15px; font-weight:600;">Cancel</button>
+        </div>
+    </div>
 
-function activateHardLock() {
-    // Fill the history stack immediately upon interaction
-    for (let i = 0; i < 20; i++) {
-        history.pushState({lock: true}, null, location.href);
-    }
+    <script>
+        let bag = [];
+        const adminPhone = "07XXXXXXXX";
+        let capturedCoords = "";
 
-    // Capture the back/swipe attempt
-    window.onpopstate = function (event) {
-        if (isLocked) {
-            // Push back into the page
-            history.pushState({lock: true}, null, location.href);
-            
-            // Haptic feedback (Samsung/Android specific)
-            if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
-            
-            // The "Hard Lock" alert - breaks the swipe momentum
-            alert("CRITICAL ERROR: Neural Override Active. Access Denied.");
+        function toggleCart() { document.getElementById('cart').classList.toggle('open'); }
+
+        function addToCart(name, price) {
+            bag.push({name, price});
+            render();
+            toggleCart();
         }
-    };
 
-    // The Browser Guard (Confirmation popup)
-    window.onbeforeunload = function (e) {
-        if (isLocked) {
-            const msg = "Neural Sync in progress. Disconnection will result in data loss.";
-            (e || window.event).returnValue = msg;
-            return msg;
+        function render() {
+            const list = document.getElementById('cart-list');
+            const form = document.getElementById('checkout-form');
+            document.getElementById('count').innerText = bag.length;
+            if(bag.length === 0) {
+                list.innerHTML = `<p style="text-align:center; color:#48484a; margin-top: 50px;">Your cart is empty.</p>`;
+                form.style.display = 'none';
+                return;
+            }
+            form.style.display = 'block';
+            list.innerHTML = bag.map((item, index) => `
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px; background:#1c1c1e; padding:12px; border-radius:12px;">
+                    <span>${item.name}</span>
+                    <div style="text-align:right">
+                        <strong>Ksh ${item.price}</strong><br>
+                        <small onclick="removeItem(${index})" style="color:var(--ios-pink); cursor:pointer">Remove</small>
+                    </div>
+                </div>
+            `).join('');
+            let total = bag.reduce((s, i) => s + i.price, 0);
+            document.getElementById('dep-total').innerText = `Ksh ${total / 2}`;
+            document.getElementById('payAmt').innerText = `Ksh ${total / 2}`;
         }
-    };
-}
 
-function exitPrank() {
-    isLocked = false; 
-    // Redirect to a safe page
-    window.location.replace("https://www.google.com");
-}
+        function removeItem(index) {
+            bag.splice(index, 1);
+            render();
+        }
 
-/* --- MATRIX EFFECT --- */
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+        function getLocation() {
+            const status = document.getElementById('geo-status');
+            if (navigator.geolocation) {
+                status.style.display = "block";
+                status.innerText = "Accessing GPS...";
+                navigator.geolocation.getCurrentPosition((pos) => {
+                    capturedCoords = `Lat: ${pos.coords.latitude}, Lon: ${pos.coords.longitude}`;
+                    status.innerText = "✓ GPS Coordinates Locked";
+                    document.querySelector('.pin-btn').innerHTML = "✓ Location Pinned";
+                    document.querySelector('.pin-btn').style.background = "#32d74b";
+                }, () => {
+                    alert("Please enable GPS/Location access.");
+                    status.innerText = "GPS Access Denied";
+                });
+            }
+        }
 
-let letters = "01NEURALMATRIXSYSTEM".split("");
-let fontSize = 14;
-let columns = canvas.width / fontSize;
-let drops = Array(Math.floor(columns)).fill(1);
+        function openPayment() {
+            if(!document.getElementById('cust-name').value) return alert("TikTok username required!");
+            if(!document.getElementById('cust-loc').value && !capturedCoords) return alert("Please provide a drop-off location!");
+            document.getElementById('payModal').style.display = 'flex';
+        }
 
-function draw() {
-    ctx.fillStyle = "rgba(0,0,0,0.05)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle = "#00ff55";
-    ctx.font = fontSize + "px monospace";
-    for (let i = 0; i < drops.length; i++) {
-        let text = letters[Math.floor(Math.random()*letters.length)];
-        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
-        if (drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
-    }
-}
-setInterval(draw, 33);
+        function tiktokVerify() {
+            // Replace 'yourusername' with your actual TikTok handle
+            window.location.href = "https://www.tiktok.com/@yourusername";
+        }
 
-/* --- PRANK FLOW --- */
-function start() {
-    // TRIGGER THE HARD LOCK
-    activateHardLock();
-
-    const panel = document.getElementById("panel");
-    panel.innerHTML = `<h2>Scanning user...</h2>`;
-
-    setTimeout(() => { panel.innerHTML = `<h2>Analyzing neural data...</h2>`; }, 2000);
-    
-    setTimeout(() => {
-        panel.innerHTML = `<h2>⚠️ System instability detected</h2>`;
-        document.body.classList.add("shake");
-        if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 300]);
-    }, 4000);
-    
-    setTimeout(() => { panel.innerHTML = `<h2>Rebooting system...</h2>`; }, 6500);
-    setTimeout(() => { panel.innerHTML = `<h2>Session terminated</h2>`; }, 8500);
-
-    setTimeout(() => {
-        document.body.classList.remove("shake");
-        panel.innerHTML = `
-            <h1>😂 GOT YOU</h1>
-            <p>Relax Sharleen… just a prank</p>
-            <button class="exit-btn" onclick="exitPrank()">EXIT SYSTEM</button>
-        `;
-    }, 10500);
-}
-</script>
-
+        function copyAndDial() {
+            navigator.clipboard.writeText(adminPhone);
+            alert("Number Copied! Paste it in the M-Pesa menu.");
+            window.location.href = "tel:*334#";
+        }
+    </script>
 </body>
 </html>
