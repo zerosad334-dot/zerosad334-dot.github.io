@@ -10,33 +10,231 @@
 
     <style>
         :root {
+            --bg: #ffffff;
+            --card-bg: #fff5f8;
             --petal-pink: #ff69b4; 
-            --white: #ffffff;
             --ios-blue: #007aff;
             --ios-green: #34c759;
-            --border: #f0f0f0;
+            --border: #eeeeee;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--white); color: #333; font-family: 'Inter', sans-serif; margin: 0; line-height: 1.5; }
-        .container { max-width: 600px; margin: 0 auto; padding: 0 20px; }
+        body { background: var(--bg); color: #333; font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 50px; overflow-x: hidden; }
+        .container { max-width: 500px; margin: 0 auto; padding: 0 20px; }
 
-        .announcement { background: var(--petal-pink); color: #fff; text-align: center; font-size: 0.7rem; font-weight: 800; padding: 10px; text-transform: uppercase; }
+        .announcement { background: var(--petal-pink); color: #fff; text-align: center; font-size: 0.7rem; font-weight: 800; padding: 10px; }
         
-        header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 15px 0; }
+        header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); padding: 15px 0; }
         .nav-flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Unbounded'; font-size: 1.2rem; color: var(--petal-pink); }
+        .logo { font-family: 'Unbounded'; font-size: 1.1rem; color: var(--petal-pink); }
 
-        .cart-btn { background: #f2f2f7; border: none; color: #333; padding: 10px 18px; border-radius: 15px; cursor: pointer; position: relative; font-weight: 600; }
-        .cart-count { position: absolute; top: -5px; right: -5px; background: #333; color: #fff; font-size: 0.6rem; padding: 3px 7px; border-radius: 10px; }
+        .cart-btn { background: #f2f2f7; border: none; padding: 10px 15px; border-radius: 12px; cursor: pointer; position: relative; font-weight: 700; z-index: 101; }
+        .cart-count { position: absolute; top: -5px; right: -5px; background: #333; color: #fff; font-size: 0.6rem; padding: 3px 6px; border-radius: 10px; }
 
-        .info-strip { background: #fff9fb; border-radius: 20px; padding: 15px; margin: 20px 0; display: flex; gap: 15px; align-items: center; border: 1px solid var(--petal-pink); }
-        .info-strip i { font-size: 1.2rem; color: var(--petal-pink); }
-        .info-strip div h4 { margin: 0; font-size: 0.8rem; color: var(--petal-pink); }
-        .info-strip div p { margin: 0; font-size: 0.7rem; color: #777; }
-
-        .section-title { font-family: 'Unbounded'; font-size: 0.9rem; margin: 30px 0 15px; color: var(--petal-pink); letter-spacing: 1px; }
+        .card { background: #fff; border-radius: 20px; padding: 20px; margin-top: 20px; border: 1px solid var(--border); box-shadow: 0 5px 15px rgba(255, 105, 180, 0.1); position: relative; z-index: 1; }
+        .grade { font-size: 0.6rem; font-weight: 800; background: var(--petal-pink); color: #fff; padding: 3px 8px; border-radius: 5px; text-transform: uppercase; }
         
-        .card { background: var(--white); border-radius: 25px; padding: 25px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-        .item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
-        .grade { font-size: 0.6rem; font-weight: 800;
+        h2 { margin: 10px 0 5px; font-size: 1.2rem; font-weight: 800; }
+        .price { font-size: 1.1rem; font-weight: 800; color: var(--ios-green); margin-bottom: 15px; }
+        
+        .add-btn { width: 100%; background: var(--petal-pink); border: none; padding: 15px; border-radius: 15px; color: #fff; font-weight: 800; cursor: pointer; font-size: 0.9rem; position: relative; z-index: 2; }
+        .add-btn:active { transform: scale(0.98); }
+
+        /* CART DRAWER - Fixed visibility issues */
+        .drawer { position: fixed; right: -100%; top: 0; width: 100%; height: 100%; background: #fff; z-index: 2000; padding: 25px; transition: 0.4s cubic-bezier(0.1, 0.7, 0.1, 1); overflow-y: auto; }
+        .drawer.open { right: 0; }
+        
+        input { width: 100%; background: #f9f9f9; border: 1px solid var(--border); padding: 14px; border-radius: 12px; margin-bottom: 10px; outline: none; font-size: 1rem; color: #000; }
+        
+        .location-box { background: var(--card-bg); padding: 15px; border-radius: 15px; border: 1px dashed var(--petal-pink); margin: 15px 0; }
+        .pin-btn { background: var(--ios-blue); color: #fff; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: 700; cursor: pointer; margin-bottom: 10px; }
+
+        /* MODAL - Fixed Z-index */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 3000; padding: 20px; backdrop-filter: blur(4px); }
+        .modal-inner { background: #fff; padding: 25px; border-radius: 30px; text-align: center; width: 100%; max-width: 350px; }
+        
+        .mpesa-card { background: #f2f2f7; padding: 20px; border-radius: 20px; margin: 15px 0; border: 1px solid var(--border); }
+
+        .faq-item { background: var(--card-bg); padding: 15px; border-radius: 15px; margin-top: 15px; border: 1px solid #fee; }
+        .faq-item h4 { margin: 0 0 5px; color: var(--petal-pink); font-size: 0.85rem; }
+        .faq-item p { margin: 0; font-size: 0.75rem; color: #666; }
+        .nockturnal { text-align: center; padding: 40px 0; font-size: 0.6rem; letter-spacing: 4px; color: #ccc; font-weight: 800; }
+    </style>
+</head>
+<body>
+
+    <div class="announcement">NAIROBI DELIVERY • 50% DEPOSIT TO BOOK</div>
+
+    <header>
+        <div class="container nav-flex">
+            <div class="logo">PETAL THRIFT 🩷</div>
+            <button class="cart-btn" onclick="toggleCart()">
+                🛒 <span id="count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <span class="grade">Grade 10/10</span>
+            <h2>Vintage Star Zip Hoodie</h2>
+            <div class="price">Ksh 2,800</div>
+            <button class="add-btn" onclick="addToCart('Star Zip Hoodie', 2800)">Add to Cart 🛒</button>
+        </div>
+
+        <div class="card">
+            <span class="grade">Grade 9/10</span>
+            <h2>Carpenter Denim Pants</h2>
+            <div class="price">Ksh 2,100</div>
+            <button class="add-btn" onclick="addToCart('Carpenter Denim', 2100)">Add to Cart 🛒</button>
+        </div>
+
+        <section style="margin-top: 30px;">
+            <div class="faq-item">
+                <h4>1. Pay Deposit</h4>
+                <p>Send 50% via M-Pesa to book your item instantly.</p>
+            </div>
+            <div class="faq-item">
+                <h4>2. TikTok Verification</h4>
+                <p>Send your M-Pesa message to our TikTok DM to dispatch the rider.</p>
+            </div>
+        </section>
+
+        <div class="nockturnal">POWERED BY NOCKTURNAL</div>
+    </main>
+
+    <div class="drawer" id="cartDrawer">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+            <h2 style="color:var(--petal-pink); margin: 0;">Your Cart 🛒</h2>
+            <button onclick="toggleCart()" style="background:none; border:none; font-size:2.5rem; cursor:pointer; padding: 0 10px;">&times;</button>
+        </div>
+
+        <div id="cart-list"></div>
+
+        <div id="checkout-section" style="display:none; margin-top:20px;">
+            <input type="text" id="cust-name" placeholder="TikTok Username">
+            
+            <div class="location-box">
+                <button class="pin-btn" id="pinBtn" onclick="getLocation()">📍 Pin My Location</button>
+                <input type="text" id="cust-loc" placeholder="Apartment / Estate / House No.">
+                <p id="geo-status" style="display:none; color:var(--ios-green); font-size:0.7rem; font-weight:bold; text-align:center;">✓ Location Locked</p>
+            </div>
+
+            <div style="background:var(--card-bg); padding:15px; border-radius:15px; text-align:center; border:1px solid var(--petal-pink); margin-bottom: 15px;">
+                <span style="font-weight:800; font-size:1.1rem;">Deposit: <span id="dep-total" style="color:var(--ios-green)">Ksh 0</span></span>
+            </div>
+
+            <button class="add-btn" onclick="openPayment()">Proceed to Payment</button>
+        </div>
+    </div>
+
+    <div class="modal" id="payModal">
+        <div class="modal-inner">
+            <h3 style="margin:0">M-Pesa Deposit</h3>
+            <div class="mpesa-card">
+                <small>SEND MONEY TO:</small>
+                <div style="font-size: 1.4rem; font-weight: 900;" id="adminNum">07XXXXXXXX</div>
+                <div style="font-size: 0.8rem; margin-top:5px;">Name: <strong>[YOUR NAME]</strong></div>
+            </div>
+            <p>Amount: <strong id="payAmt" style="color:var(--ios-green)">Ksh 0</strong></p>
+            
+            <button class="add-btn" onclick="copyAndPay()">Copy Number & Pay</button>
+            <button class="add-btn" style="background:#000; margin-top:10px;" onclick="goToTikTok()">DM Screenshot on TikTok</button>
+            <button onclick="closeModal()" style="background:none; border:none; margin-top:15px; color:#999; font-weight:bold; cursor:pointer;">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        let items = [];
+        const myNumber = "07XXXXXXXX"; 
+        const myTikTok = "your_handle"; 
+
+        function toggleCart() {
+            const drawer = document.getElementById('cartDrawer');
+            drawer.classList.toggle('open');
+        }
+
+        function addToCart(name, price) {
+            items.push({name, price});
+            updateUI();
+            toggleCart(); // Automatically open cart when item is added
+        }
+
+        function removeItem(index) {
+            items.splice(index, 1);
+            updateUI();
+        }
+
+        function updateUI() {
+            const list = document.getElementById('cart-list');
+            const count = document.getElementById('count');
+            const checkout = document.getElementById('checkout-section');
+            const depTotal = document.getElementById('dep-total');
+            const payAmt = document.getElementById('payAmt');
+
+            count.innerText = items.length;
+
+            if (items.length === 0) {
+                list.innerHTML = '<p style="text-align:center; color:#999; margin-top:40px;">Cart is empty</p>';
+                checkout.style.display = 'none';
+                return;
+            }
+
+            checkout.style.display = 'block';
+            list.innerHTML = items.map((item, i) => `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #eee;">
+                    <div>
+                        <div style="font-weight:700; font-size:1rem;">${item.name}</div>
+                        <div style="color:var(--ios-green); font-weight:800;">Ksh ${item.price}</div>
+                    </div>
+                    <button onclick="removeItem(${i})" style="background:none; border:none; color:var(--petal-pink); font-weight:bold; cursor:pointer; font-size: 0.9rem;">Remove</button>
+                </div>
+            `).join('');
+
+            let total = items.reduce((sum, item) => sum + item.price, 0);
+            depTotal.innerText = "Ksh " + (total / 2);
+            payAmt.innerText = "Ksh " + (total / 2);
+        }
+
+        function getLocation() {
+            const btn = document.getElementById('pinBtn');
+            const status = document.getElementById('geo-status');
+            if (navigator.geolocation) {
+                btn.innerText = "Locating...";
+                navigator.geolocation.getCurrentPosition((position) => {
+                    btn.style.background = "#34c759";
+                    btn.innerText = "✓ Location Captured";
+                    status.style.display = "block";
+                }, () => {
+                    alert("Please turn on your GPS location.");
+                    btn.innerText = "📍 Pin My Location";
+                });
+            }
+        }
+
+        function openPayment() {
+            const name = document.getElementById('cust-name').value;
+            const loc = document.getElementById('cust-loc').value;
+            if(!name || !loc) {
+                alert("Please enter your TikTok username and House/Estate info!");
+                return;
+            }
+            document.getElementById('payModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('payModal').style.display = 'none';
+        }
+
+        function copyAndPay() {
+            navigator.clipboard.writeText(myNumber);
+            alert("Number copied! Paste it in M-Pesa.");
+            window.location.href = "tel:*334#";
+        }
+
+        function goToTikTok() {
+            window.location.href = "https://www.tiktok.com/@" + myTikTok;
+        }
+    </script>
+</body>
+</html>
