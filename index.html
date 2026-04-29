@@ -6,7 +6,7 @@
     <title>Petal Thrift | Archive & Luxury</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -19,147 +19,186 @@
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        /* LAUNCH LOCK STYLES */
+        #locked-wrapper {
+            filter: blur(10px); 
+            pointer-events: none;
+            user-select: none;
+            transition: 1.5s filter ease;
+        }
+
+        #timer-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-timer {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            padding: 45px 30px;
+            border-radius: 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+        }
+
+        .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 30px 0; }
+        .t-val { font-family: 'Unbounded'; font-size: 1.8rem; display: block; color: #000; }
+        .t-lbl { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 2px; color: var(--petal-pink); font-weight: 800; }
+
+        /* ORIGINAL WEBSITE STYLES */
         body { background: var(--white); color: #1a1a1a; font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6; padding-bottom: 60px; }
         .container { max-width: 650px; margin: 0 auto; padding: 0 25px; }
-
         .announcement { background: var(--petal-pink); color: #fff; text-align: center; font-size: 0.65rem; font-weight: 900; padding: 12px; text-transform: uppercase; letter-spacing: 2px; }
-        
         header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.98); border-bottom: 1px solid var(--border); padding: 18px 0; }
         .nav-flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Unbounded'; font-size: 1.3rem; color: var(--petal-pink); font-weight: 900; }
-
+        .logo { font-family: 'Unbounded'; font-size: 1.3rem; color: var(--petal-pink); font-weight: 900; cursor: pointer; }
         .cart-btn { background: #000; color: #fff; border: none; padding: 12px 20px; border-radius: 14px; cursor: pointer; position: relative; font-weight: 700; font-size: 0.8rem; }
         .cart-count { position: absolute; top: -8px; right: -8px; background: var(--petal-pink); color: #fff; font-size: 0.65rem; padding: 4px 8px; border-radius: 50%; border: 2px solid #fff; }
-
         .section-header { font-family: 'Unbounded'; font-size: 0.75rem; margin: 40px 0 20px; color: var(--petal-pink); letter-spacing: 2px; border-bottom: 1px solid #f2f2f7; padding-bottom: 10px; }
-        
         .card { background: var(--white); border-radius: 30px; padding: 30px; margin-bottom: 25px; border: 1.5px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
         .grade-pill { font-size: 0.6rem; font-weight: 900; background: #000; color: #fff; padding: 5px 12px; border-radius: 8px; display: inline-block; margin-bottom: 15px; }
-        
         h2 { margin: 0; font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; }
         .price-tag { font-size: 1.3rem; font-weight: 900; color: var(--ios-green); margin: 12px 0; display: block; }
-        
         .description-text { font-size: 0.9rem; color: var(--sub-text); margin-bottom: 25px; border-left: 3px solid var(--petal-pink); padding-left: 15px; }
-        
         .add-btn { width: 100%; background: var(--petal-pink); border: none; padding: 18px; border-radius: 20px; color: #fff; font-weight: 900; cursor: pointer; font-size: 0.95rem; }
-
         .policy-section { background: #fff9fb; border-radius: 25px; padding: 25px; margin-top: 50px; border: 1px solid #fee; }
         .policy-section h3 { font-family: 'Unbounded'; font-size: 0.8rem; margin-top: 0; color: var(--petal-pink); }
         .policy-point { margin-bottom: 15px; }
         .policy-point strong { font-size: 0.85rem; display: block; margin-bottom: 4px; }
         .policy-point p { font-size: 0.8rem; color: var(--sub-text); margin: 0; }
-
         .drawer { position: fixed; right: -100%; top: 0; width: 100%; height: 100%; background: var(--white); z-index: 500; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); padding: 40px 25px; overflow-y: auto; pointer-events: none; }
         .drawer.open { right: 0; pointer-events: auto; }
-        
         input { width: 100%; background: #f5f5f7; border: 1.5px solid transparent; padding: 18px; border-radius: 18px; margin-bottom: 12px; outline: none; font-weight: 600; }
-        
         .location-kit { background: #f0f7ff; padding: 20px; border-radius: 20px; border: 1px dashed var(--ios-blue); margin-bottom: 20px; }
         .gps-trigger { background: var(--ios-blue); color: #fff; border: none; padding: 14px; width: 100%; border-radius: 14px; font-weight: 800; cursor: pointer; }
-        
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 25px; backdrop-filter: blur(8px); }
         .modal-inner { background: #fff; padding: 35px; border-radius: 40px; text-align: center; width: 100%; max-width: 400px; }
         .mpesa-receipt { background: #f2f2f7; padding: 25px; border-radius: 25px; margin: 25px 0; border: 2px solid var(--border); }
-
         .nockturnal { text-align: center; padding: 80px 0 40px; font-size: 0.65rem; letter-spacing: 6px; color: #ddd; font-weight: 900; }
     </style>
 </head>
 <body>
 
-    <div class="announcement">Limited Archive Drop • Nairobi Delivery</div>
+    <div id="timer-overlay">
+        <div class="glass-timer">
+            <div style="font-family:'Unbounded'; font-weight:900; font-size:1.4rem;" onclick="adminIn()">PETAL THRIFT 🩷</div>
+            <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:3px; font-weight:800; color:#999; margin-top:5px;">Vault Opening Soon</div>
 
-    <header>
-        <div class="container nav-flex">
-            <div class="logo">PETAL THRIFT 🩷</div>
-            <button class="cart-btn" onclick="toggleCart()">
-                VIEW BAG <span id="count" class="cart-count">0</span>
-            </button>
-        </div>
-    </header>
-
-    <main class="container">
-        <div class="section-header">ARCHIVE CATALOGUE</div>
-
-        <div class="card">
-            <div class="grade-pill">CONDITION: 10/10</div>
-            <h2>Vintage Star-Pattern Zip Hoodie</h2>
-            <span class="price-tag">Ksh 2,800</span>
-            <p class="description-text">A rare archive piece featuring high-density embroidery and a heavyweight cotton fleece build. Boxy vintage fit.</p>
-            <button class="add-btn" onclick="addToCart('Vintage Star Hoodie', 2800)">Add to Cart 🛒</button>
-        </div>
-
-        <div class="card">
-            <div class="grade-pill">CONDITION: 9.5/10</div>
-            <h2>90s Baggy Carpenter Denim</h2>
-            <span class="price-tag">Ksh 2,100</span>
-            <p class="description-text">Heavy-wash indigo denim with contrast white stitching. Features multiple utility pockets and a wide-leg silhouette.</p>
-            <button class="add-btn" onclick="addToCart('Carpenter Denim', 2100)">Add to Cart 🛒</button>
-        </div>
-
-        <section class="policy-section">
-            <h3>🩷 STORE POLICIES</h3>
-            <div class="policy-point">
-                <strong>1. 50% Booking Deposit</strong>
-                <p>Required to secure items. Paid via M-Pesa before dispatch.</p>
+            <div class="timer-grid">
+                <div><span class="t-val" id="d">00</span><span class="t-lbl">Days</span></div>
+                <div><span class="t-val" id="h">00</span><span class="t-lbl">Hrs</span></div>
+                <div><span class="t-val" id="m">00</span><span class="t-lbl">Min</span></div>
+                <div><span class="t-val" id="s">00</span><span class="t-lbl">Sec</span></div>
             </div>
-            <div class="policy-point">
-                <strong>2. TikTok Verification</strong>
-                <p>Send your payment screenshot to our TikTok DM to confirm delivery.</p>
-            </div>
-            <div class="policy-point">
-                <strong>3. Quick Delivery</strong>
-                <p>Rider dispatched immediately after verification to your pinned location.</p>
-            </div>
-        </section>
 
-        <div class="nockturnal">POWERED BY NOCKTURNAL</div>
-    </main>
-
-    <div class="drawer" id="cart">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 30px;">
-            <h2 style="font-family:'Unbounded'; font-size:1.1rem;">YOUR BAG 🛒</h2>
-            <button onclick="toggleCart()" style="background:none; border:none; font-size:2.5rem; cursor:pointer;">&times;</button>
-        </div>
-        <div id="cart-list"></div>
-        <div id="checkout-form" style="display:none; margin-top:30px;">
-            <input type="text" id="cust-name" placeholder="Enter Your Name">
-            <div class="location-kit">
-                <button class="gps-trigger" id="gpsBtn" onclick="getLocation()">📍 PIN GPS LOCATION</button>
-                <input type="text" id="cust-loc" placeholder="Estate / House Number" style="margin-top:10px;">
-            </div>
-            <div style="background: #fff9fb; padding: 25px; border-radius: 25px; border: 1.5px solid var(--petal-pink); text-align:center;">
-                <span style="font-weight:900; font-size:1.5rem; color:var(--ios-green);" id="dep-total">Ksh 0</span>
-            </div>
-            <button class="add-btn" style="margin-top:25px;" onclick="openPayment()">PROCEED TO BOOKING</button>
+            <div style="font-size:0.75rem; color:#666; font-weight:600;">The archive is being catalogued.<br>See you in 10 days.</div>
+            <div class="nockturnal" style="padding:40px 0 0">POWERED BY NOCKTURNAL</div>
         </div>
     </div>
 
-    <div class="modal" id="payModal">
-        <div class="modal-inner">
-            <h3 style="font-family:'Unbounded'; font-size:0.9rem;">M-PESA PAYMENT</h3>
-            <div class="mpesa-receipt">
-                <div style="font-size: 1.8rem; font-weight: 900;" id="phoneDisp">0758361303</div>
-                <div style="font-size: 0.9rem; margin-top:5px;">NAME: <strong>[YOUR NAME]</strong></div>
+    <div id="locked-wrapper">
+        <div class="announcement">Limited Archive Drop • Nairobi Delivery</div>
+
+        <header>
+            <div class="container nav-flex">
+                <div class="logo">PETAL THRIFT 🩷</div>
+                <button class="cart-btn" onclick="toggleCart()">
+                    VIEW BAG <span id="count" class="cart-count">0</span>
+                </button>
             </div>
-            <strong id="payAmt" style="font-size: 1.4rem; color:var(--ios-green);">Ksh 0</strong>
-            <button class="add-btn" style="margin-top:20px;" onclick="copyAndDial()">COPY & PAY</button>
-            <button class="add-btn" style="background:#000; margin-top:12px;" onclick="window.location.href='https://www.tiktok.com/@petalthrift.co'">DM SCREENSHOT</button>
-            <button onclick="document.getElementById('payModal').style.display='none'" style="background:none; border:none; color:#999; margin-top:20px; cursor:pointer;">GO BACK</button>
-        </div>
+        </header>
+
+        <main class="container">
+            <div class="section-header">ARCHIVE CATALOGUE</div>
+
+            <div class="card">
+                <div class="grade-pill">CONDITION: 10/10</div>
+                <h2>Vintage Star-Pattern Zip Hoodie</h2>
+                <span class="price-tag">Ksh 2,800</span>
+                <p class="description-text">A rare archive piece featuring high-density embroidery and a heavyweight cotton fleece build. Boxy vintage fit.</p>
+                <button class="add-btn" onclick="addToCart('Vintage Star Hoodie', 2800)">Add to Cart 🛒</button>
+            </div>
+
+            <div class="card">
+                <div class="grade-pill">CONDITION: 9.5/10</div>
+                <h2>90s Baggy Carpenter Denim</h2>
+                <span class="price-tag">Ksh 2,100</span>
+                <p class="description-text">Heavy-wash indigo denim with contrast white stitching. Features multiple utility pockets and a wide-leg silhouette.</p>
+                <button class="add-btn" onclick="addToCart('Carpenter Denim', 2100)">Add to Cart 🛒</button>
+            </div>
+
+            <section class="policy-section">
+                <h3>🩷 STORE POLICIES</h3>
+                <div class="policy-point">
+                    <strong>1. 50% Booking Deposit</strong>
+                    <p>Required to secure items. Paid via M-Pesa before dispatch.</p>
+                </div>
+                <div class="policy-point">
+                    <strong>2. TikTok Verification</strong>
+                    <p>Send your payment screenshot to our TikTok DM to confirm delivery.</p>
+                </div>
+                <div class="policy-point">
+                    <strong>3. Quick Delivery</strong>
+                    <p>Rider dispatched immediately after verification to your pinned location.</p>
+                </div>
+            </section>
+
+            <div class="nockturnal">POWERED BY NOCKTURNAL</div>
+        </main>
     </div>
 
     <script>
+        // --- 10 DAY TIMER SETTINGS ---
+        // We are setting the date to exactly 10 days from today (April 29 -> May 9)
+        const targetDate = new Date("May 9, 2026 12:00:00").getTime();
+
+        const timer = setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                unlock();
+            } else {
+                document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }
+        }, 1000);
+
+        function unlock() {
+            clearInterval(timer);
+            document.getElementById('timer-overlay').style.display = 'none';
+            document.getElementById('locked-wrapper').style.filter = 'none';
+            document.getElementById('locked-wrapper').style.pointerEvents = 'auto';
+        }
+
+        let clicks = 0;
+        function adminIn() {
+            clicks++;
+            if (clicks === 5) { unlock(); }
+            setTimeout(() => clicks = 0, 2000);
+        }
+
+        // --- SHOP LOGIC ---
         let bag = [];
         const adminPhone = "0758361303";
-
         function toggleCart() { document.getElementById('cart').classList.toggle('open'); }
-
         function addToCart(name, price) {
             bag.push({name, price});
             render();
             if(!document.getElementById('cart').classList.contains('open')) toggleCart();
         }
-
         function render() {
             const list = document.getElementById('cart-list');
             const form = document.getElementById('checkout-form');
@@ -180,9 +219,7 @@
             document.getElementById('dep-total').innerText = `Ksh ${total / 2}`;
             document.getElementById('payAmt').innerText = `Ksh ${total / 2}`;
         }
-
         function removeItem(i) { bag.splice(i, 1); render(); }
-
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition((pos) => {
@@ -191,12 +228,10 @@
                 }, () => alert("Enable GPS for delivery."));
             }
         }
-
         function openPayment() {
             if(!document.getElementById('cust-name').value || !document.getElementById('cust-loc').value) return alert("Fill in your info first!");
             document.getElementById('payModal').style.display = 'flex';
         }
-
         function copyAndDial() {
             navigator.clipboard.writeText(adminPhone);
             alert("Number Copied!");
