@@ -2,290 +2,277 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Petal Thrift | Archive & Luxury</title>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --petal-pink: #ff69b4; 
+            --soft-pink: #fff0f6;
+            --cream: #fffdf5;
             --white: #ffffff;
-            --ios-blue: #007aff;
             --ios-green: #34c759;
-            --border: #f2f2f7;
+            --border: #f5eedc;
+            --text: #1a1a1a;
             --sub-text: #666666;
+            --shadow: 0 15px 40px rgba(255, 105, 180, 0.15);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         
-        #timer-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 99999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-        }
+        body { background: var(--cream); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6; overflow-x: hidden; }
 
-        .glass-timer {
-            background: #ffffff;
-            border: 1px solid var(--border);
-            padding: 45px 30px;
-            border-radius: 40px;
-            text-align: center;
-            width: 90%;
-            max-width: 420px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-        }
-
-        .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 30px 0; }
-        .t-val { font-family: 'Unbounded'; font-size: 1.8rem; display: block; color: #000; }
-        .t-lbl { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 2px; color: var(--petal-pink); font-weight: 800; }
-
-        #locked-wrapper {
-            filter: blur(12px); 
-            -webkit-filter: blur(12px);
-            pointer-events: none;
-            user-select: none;
-        }
-
-        body { background: var(--white); color: #1a1a1a; font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6; padding-bottom: 60px; }
-        .container { max-width: 650px; margin: 0 auto; padding: 0 25px; }
-        .announcement { background: var(--petal-pink); color: #fff; text-align: center; font-size: 0.65rem; font-weight: 900; padding: 12px; text-transform: uppercase; letter-spacing: 2px; }
-        header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.98); border-bottom: 1px solid var(--border); padding: 18px 0; }
+        /* Navigation */
+        .container { max-width: 600px; margin: 0 auto; padding: 0 20px; }
+        .announcement { background: var(--petal-pink); color: #fff; text-align: center; font-size: 0.65rem; font-weight: 900; padding: 12px; text-transform: uppercase; letter-spacing: 3px; }
+        
+        header { position: sticky; top: 0; z-index: 100; background: rgba(255, 253, 245, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 15px 0; }
         .nav-flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Unbounded'; font-size: 1.3rem; color: var(--petal-pink); font-weight: 900; }
-        .cart-btn { background: #000; color: #fff; border: none; padding: 12px 20px; border-radius: 14px; cursor: pointer; position: relative; font-weight: 700; font-size: 0.8rem; }
-        .cart-count { position: absolute; top: -8px; right: -8px; background: var(--petal-pink); color: #fff; font-size: 0.65rem; padding: 4px 8px; border-radius: 50%; border: 2px solid #fff; }
-        .section-header { font-family: 'Unbounded'; font-size: 0.75rem; margin: 40px 0 20px; color: var(--petal-pink); letter-spacing: 2px; border-bottom: 1px solid #f2f2f7; padding-bottom: 10px; }
-        .card { background: var(--white); border-radius: 30px; padding: 30px; margin-bottom: 25px; border: 1.5px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
-        .grade-pill { font-size: 0.6rem; font-weight: 900; background: #000; color: #fff; padding: 5px 12px; border-radius: 8px; display: inline-block; margin-bottom: 15px; }
-        h2 { margin: 0; font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; }
+        .logo { font-family: 'Unbounded'; font-size: 1.2rem; color: var(--petal-pink); font-weight: 900; cursor: default; text-shadow: 2px 2px 0px rgba(255,105,180,0.1); }
+        
+        .cart-btn { background: #000; color: #fff; border: none; padding: 12px 22px; border-radius: 50px; cursor: pointer; position: relative; font-weight: 800; font-size: 0.75rem; transition: transform 0.2s; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .cart-btn:active { transform: scale(0.9); }
+        .cart-count { position: absolute; top: -5px; right: -5px; background: var(--petal-pink); color: #fff; font-size: 0.6rem; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 2.5px solid var(--white); }
+
+        /* Product Cards */
+        .section-header { font-family: 'Unbounded'; font-size: 0.8rem; margin: 40px 0 25px; color: var(--petal-pink); letter-spacing: 2px; text-align: center; text-transform: uppercase; }
+        .card { background: var(--white); border-radius: 40px; padding: 25px; margin-bottom: 40px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.03); position: relative; }
+        
+        .slider-container { display: flex; overflow-x: auto; gap: 15px; scroll-snap-type: x mandatory; margin-bottom: 22px; border-radius: 30px; scrollbar-width: none; }
+        .slider-container::-webkit-scrollbar { display: none; }
+        .slider-container img { min-width: 100%; scroll-snap-align: start; height: 450px; object-fit: cover; border-radius: 30px; background: var(--soft-pink); }
+        
+        .grade-pill { font-size: 0.55rem; font-weight: 900; background: var(--petal-pink); color: #fff; padding: 8px 16px; border-radius: 50px; display: inline-block; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(255, 105, 180, 0.2); }
+        h2 { margin: 0; font-size: 1.4rem; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
         .price-tag { font-size: 1.3rem; font-weight: 900; color: var(--ios-green); margin: 12px 0; display: block; }
-        .description-text { font-size: 0.9rem; color: var(--sub-text); margin-bottom: 25px; border-left: 3px solid var(--petal-pink); padding-left: 15px; }
-        .add-btn { width: 100%; background: var(--petal-pink); border: none; padding: 18px; border-radius: 20px; color: #fff; font-weight: 900; cursor: pointer; font-size: 0.95rem; }
-        .policy-section { background: #fff9fb; border-radius: 25px; padding: 25px; margin-top: 50px; border: 1px solid #fee; }
-        .policy-section h3 { font-family: 'Unbounded'; font-size: 0.8rem; margin-top: 0; color: var(--petal-pink); }
-        .policy-point { margin-bottom: 15px; }
-        .policy-point strong { font-size: 0.85rem; display: block; margin-bottom: 4px; }
-        .policy-point p { font-size: 0.8rem; color: var(--sub-text); margin: 0; }
-        .drawer { position: fixed; right: -100%; top: 0; width: 100%; height: 100%; background: var(--white); z-index: 500; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); padding: 40px 25px; overflow-y: auto; pointer-events: none; }
-        .drawer.open { right: 0; pointer-events: auto; }
-        input { width: 100%; background: #f5f5f7; border: 1.5px solid transparent; padding: 18px; border-radius: 18px; margin-bottom: 12px; outline: none; font-weight: 600; }
-        .location-kit { background: #f0f7ff; padding: 20px; border-radius: 20px; border: 1px dashed var(--ios-blue); margin-bottom: 20px; }
-        .gps-trigger { background: var(--ios-blue); color: #fff; border: none; padding: 14px; width: 100%; border-radius: 14px; font-weight: 800; cursor: pointer; }
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 25px; backdrop-filter: blur(8px); }
-        .modal-inner { background: #fff; padding: 35px; border-radius: 40px; text-align: center; width: 100%; max-width: 400px; }
-        .mpesa-receipt { background: #f2f2f7; padding: 25px; border-radius: 25px; margin: 25px 0; border: 2px solid var(--border); }
-        .nockturnal { text-align: center; padding: 80px 0 40px; font-size: 0.65rem; letter-spacing: 6px; color: #ddd; font-weight: 900; }
+        .description-text { font-size: 0.9rem; color: var(--sub-text); margin-bottom: 30px; border-left: 3px solid var(--petal-pink); padding-left: 18px; line-height: 1.7; }
+        
+        .add-btn { width: 100%; background: var(--petal-pink); border: none; padding: 22px; border-radius: 25px; color: #fff; font-weight: 900; cursor: pointer; font-size: 0.95rem; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3); }
+        .add-btn:active { transform: scale(0.95); background: #f05aab; }
+
+        /* Store Details Section */
+        .store-details { background: var(--soft-pink); border-radius: 40px; padding: 35px; margin: 60px 0; border: 2px dashed var(--petal-pink); }
+        .store-details h3 { font-family: 'Unbounded'; font-size: 0.9rem; color: var(--petal-pink); margin-top: 0; }
+        .store-details p { font-size: 0.85rem; color: var(--sub-text); margin: 10px 0; }
+
+        /* Bag Drawer */
+        .drawer { position: fixed; right: -100%; top: 0; width: 100%; height: 100%; background: var(--cream); z-index: 500; transition: 0.7s cubic-bezier(0.19, 1, 0.22, 1); padding: 45px 25px; overflow-y: auto; }
+        .drawer.open { right: 0; }
+        .bag-item { background: #fff; padding: 20px; border-radius: 28px; margin-bottom: 18px; display: flex; align-items: center; gap: 18px; border: 1px solid var(--border); box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
+        .bag-img { width: 75px; height: 75px; border-radius: 18px; object-fit: cover; background: var(--soft-pink); }
+        
+        /* Checkout Interactive */
+        .checkout-box { background: #fff; border-radius: 40px; padding: 30px; border: 1px solid var(--border); margin-top: 40px; box-shadow: var(--shadow); }
+        input { width: 100%; background: var(--soft-pink); border: 1.5px solid transparent; padding: 20px; border-radius: 22px; margin-bottom: 15px; font-size: 1rem; font-family: 'Inter'; font-weight: 600; transition: all 0.3s; }
+        input:focus { border-color: var(--petal-pink); background: #fff; }
+        
+        .receipt-card { background: var(--soft-pink); padding: 25px; border-radius: 30px; border: 1.5px solid var(--petal-pink); text-align: center; margin-bottom: 25px; }
+        .receipt-label { font-size: 0.7rem; font-weight: 900; letter-spacing: 2.5px; color: var(--petal-pink); margin-bottom: 10px; display: block; }
+        .total-glow { font-size: 1.6rem; font-family: 'Unbounded'; font-weight: 900; color: var(--text); }
+
+        /* Powered By Section */
+        .nockturnal { text-align: center; padding: 50px 0; opacity: 0.6; }
+        .nock-text { font-family: 'Unbounded'; font-size: 0.55rem; letter-spacing: 4px; color: var(--text); font-weight: 900; }
+
+        /* M-Pesa Modal */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(15px); }
+        .modal-inner { background: #fff; padding: 45px 30px; border-radius: 50px; text-align: center; width: 92%; max-width: 400px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+        .pay-number-box { background: var(--soft-pink); padding: 25px; border-radius: 28px; margin: 20px 0; border: 2.5px solid var(--petal-pink); position: relative; cursor: pointer; transition: transform 0.2s; }
+        .pay-number-box:active { transform: scale(0.96); }
+        .copy-tag { position: absolute; top: -12px; right: 25px; background: var(--petal-pink); color: #fff; font-size: 0.55rem; padding: 5px 12px; border-radius: 20px; font-weight: 900; }
     </style>
 </head>
 <body>
 
-    <div id="timer-overlay">
-        <div class="glass-timer">
-            <div id="admin-key" style="font-family:'Unbounded'; font-weight:900; font-size:1.4rem; cursor:pointer; color:var(--petal-pink);" onclick="secretCode()">PETAL THRIFT 🩷</div>
-            <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:3px; font-weight:800; color:#999; margin-top:5px;">Vault Opening Soon</div>
-            <div class="timer-grid">
-                <div><span class="t-val" id="d">10</span><span class="t-lbl">Days</span></div>
-                <div><span class="t-val" id="h">00</span><span class="t-lbl">Hrs</span></div>
-                <div><span class="t-val" id="m">00</span><span class="t-lbl">Min</span></div>
-                <div><span class="t-val" id="s">00</span><span class="t-lbl">Sec</span></div>
-            </div>
-            <div style="font-size:0.75rem; color:#666; font-weight:600;">The archive is being catalogued.<br>See you in 10 days.</div>
-            <div class="nockturnal" style="padding:40px 0 0">POWERED BY NOCKTURNAL</div>
+    <div class="announcement">Limited Archive Drop • Nairobi Delivery 🩷</div>
+    
+    <header>
+        <div class="container nav-flex">
+            <div class="logo">PETAL THRIFT 🩷</div>
+            <button class="cart-btn" onclick="toggleCart()">MY BAG <span id="count" class="cart-count">0</span></button>
         </div>
-    </div>
+    </header>
 
-    <div id="locked-wrapper">
-        <div class="announcement">Limited Archive Drop • Nairobi Delivery</div>
-        <header>
-            <div class="container nav-flex">
-                <div class="logo">PETAL THRIFT 🩷</div>
-                <button class="cart-btn" onclick="toggleCart()">VIEW BAG <span id="count" class="cart-count">0</span></button>
+    <main class="container">
+        <div class="section-header">Exclusive Drop</div>
+
+        <div class="card">
+            <div class="grade-pill">CONDITION: 9.5 / 10</div>
+            <div class="slider-container">
+                <img src="YOUR_CUSTOM_PHOTO.jpg" alt="Place your photo here!">
             </div>
-        </header>
-        <main class="container">
-            <div class="section-header">ARCHIVE CATALOGUE</div>
+            <h2>Hollister Heritage Burgundy Hoodie</h2>
+            <span class="price-tag">Ksh 800</span>
+            <p class="description-text">A high-fashion deep burgundy fleece featuring the iconic 1922 heritage embroidery. Curated for a soft, oversized "coquette" aesthetic and premium warmth.</p>
+            <button class="add-btn" onclick="addToCart('Hollister Hoodie', 800, 'YOUR_CUSTOM_PHOTO.jpg')">ADD TO BAG +</button>
+        </div>
 
-            <div class="card">
-                <div class="grade-pill">CONDITION: 9.5/10</div>
-                <div style="display: flex; overflow-x: auto; gap: 10px; scroll-snap-type: x mandatory; margin-bottom: 20px; border-radius: 20px; -webkit-overflow-scrolling: touch;">
-                    <div style="min-width: 100%; scroll-snap-align: start;"><img src="YOUR_HOLLISTER_1" style="width: 100%; border-radius: 20px;"></div>
-                    <div style="min-width: 100%; scroll-snap-align: start;"><img src="YOUR_HOLLISTER_2" style="width: 100%; border-radius: 20px;"></div>
-                </div>
-                <h2>Hollister Heritage Burgundy Hoodie</h2>
-                <span class="price-tag">Ksh 800</span>
-                <p class="description-text">Deep burgundy fleece with the iconic 1922 heritage gull embroidery. Timeless California staple.</p>
-                <button class="add-btn" onclick="addToCart('Hollister Burgundy Hoodie', 800)">Add to Cart 🛒</button>
+        <div class="card">
+            <div class="grade-pill">CONDITION: 9.0 / 10</div>
+            <div class="slider-container">
+                <img src="1000023446.jpg" alt="Union Jack 1">
+                <img src="1000023443.jpg" alt="Union Jack 2">
             </div>
+            <h2>Union Jack Statement Long-Sleeve</h2>
+            <span class="price-tag">Ksh 700</span>
+            <p class="description-text">Aggressive monochromatic style. This fitted knit features high-contrast British graphics for a sharp, archive-inspired streetwear look.</p>
+            <button class="add-btn" onclick="addToCart('Union Jack Knit', 700, '1000023446.jpg')">ADD TO BAG +</button>
+        </div>
 
-            <div class="card">
-                <div class="grade-pill">CONDITION: 9/10</div>
-                <div style="display: flex; overflow-x: auto; gap: 10px; scroll-snap-type: x mandatory; margin-bottom: 20px; border-radius: 20px; -webkit-overflow-scrolling: touch;">
-                    <div style="min-width: 100%; scroll-snap-align: start;"><img src="YOUR_UNIONJACK_1" style="width: 100%; border-radius: 20px;"></div>
-                    <div style="min-width: 100%; scroll-snap-align: start;"><img src="YOUR_UNIONJACK_2" style="width: 100%; border-radius: 20px;"></div>
-                </div>
-                <h2>Union Jack Statement Long Sleeve</h2>
-                <span class="price-tag">Ksh 700</span>
-                <p class="description-text">High-contrast Union Jack graphic. Lightweight knit silhouette commanding attention.</p>
-                <button class="add-btn" onclick="addToCart('Union Jack Long Sleeve', 700)">Add to Cart 🛒</button>
+        <div class="card">
+            <div class="grade-pill">CONDITION: 9.0 / 10</div>
+            <div class="slider-container">
+                <img src="1000023453.jpg" alt="Pink Tee 1">
+                <img src="1000023450.jpg" alt="Pink Tee 2">
             </div>
+            <h2>Official College Team "Coquette" Tee</h2>
+            <span class="price-tag">Ksh 400</span>
+            <p class="description-text">Vintage baby-pink collegiate tee with an unexpected open-back scoop detail. Blends classic varsity vibes with feminine elegance.</p>
+            <button class="add-btn" onclick="addToCart('Pink Coquette Tee', 400, '1000023453.jpg')">ADD TO BAG +</button>
+        </div>
 
-            <div class="card">
-                <div class="grade-pill">CONDITION: 9/10</div>
-                <div style="display: flex; overflow-x: auto; gap: 10px; scroll-snap-type: x mandatory; margin-bottom: 20px; border-radius: 20px; -webkit-overflow-scrolling: touch;">
-                    <div style="min-width: 100%; scroll-snap-align: start;"><img src="YOUR_PINKTEE_1" style="width: 100%; border-radius: 20px;"></div>
-                    <div style="min-width: 100%; scroll-snap-align: start;"><img src="YOUR_PINKTEE_2" style="width: 100%; border-radius: 20px;"></div>
-                </div>
-                <h2>Official College Team "Coquette" Tee</h2>
-                <span class="price-tag">Ksh 400</span>
-                <p class="description-text">Baby-pink tee with a surprise open-back scoop design. Playful Y2K-inspired twist.</p>
-                <button class="add-btn" onclick="addToCart('College Team Pink Tee', 400)">Add to Cart 🛒</button>
+        <div class="card">
+            <div class="grade-pill">CONDITION: 10 / 10</div>
+            <div class="slider-container">
+                <img src="1000023159.jpg" alt="White Fur 1">
+                <img src="1000023155.jpg" alt="White Fur 2">
             </div>
+            <h2>Nordic Arctic Faux-Fur Hoodie</h2>
+            <span class="price-tag">Ksh 1,200</span>
+            <p class="description-text">Ultra-luxurious white arctic fleece. Features a premium faux-fur hood and a secret Nordic-patterned thermal lining for ultimate winter glam.</p>
+            <button class="add-btn" onclick="addToCart('Arctic Hoodie', 1200, '1000023159.jpg')">ADD TO BAG +</button>
+        </div>
 
-            <div class="card">
-                <div class="grade-pill">CONDITION: 10/10</div>
-                <div style="display: flex; overflow-x: auto; gap: 10px; scroll-snap-type: x mandatory; margin-bottom: 20px; border-radius: 20px; -webkit-overflow-scrolling: touch;">
-                    <div style="min-width: 100%; scroll-snap-align: start;"><img src="YOUR_WHITEFUR_1" style="width: 100%; border-radius: 20px;"></div>
-                    <div style="min-width: 100%; scroll-snap-align: start;"><img src="YOUR_WHITEFUR_2" style="width: 100%; border-radius: 20px;"></div>
-                </div>
-                <h2>Nordic-Lined Arctic Faux-Fur Hoodie</h2>
-                <span class="price-tag">Ksh 1,200</span>
-                <p class="description-text">Plush white hoodie featuring a premium faux-fur trim and hidden Nordic-patterned lining.</p>
-                <button class="add-btn" onclick="addToCart('White Faux-Fur Hoodie', 1200)">Add to Cart 🛒</button>
+        <div class="card">
+            <div class="grade-pill">CONDITION: 9.5 / 10</div>
+            <div class="slider-container">
+                <img src="1000023147.jpg" alt="A&F 1">
+                <img src="1000023149.jpg" alt="A&F 2">
             </div>
+            <h2>Abercrombie Heritage Fur Jacket</h2>
+            <span class="price-tag">Ksh 1,500</span>
+            <p class="description-text">Heavyweight navy zip-up curated for the elite archive. Features soft faux-fur lining and iconic collegiate applique for that luxury campus look.</p>
+            <button class="add-btn" onclick="addToCart('A&F Jacket', 1500, '1000023147.jpg')">ADD TO BAG +</button>
+        </div>
 
-            <div class="card">
-                <div class="grade-pill">CONDITION: 9.5/10</div>
-                <div style="display: flex; overflow-x: auto; gap: 10px; scroll-snap-type: x mandatory; margin-bottom: 20px; border-radius: 20px; -webkit-overflow-scrolling: touch;">
-                    <div style="min-width: 100%; scroll-snap-align: start;"><img src="YOUR_ABERCROMBIE_1" style="width: 100%; border-radius: 20px;"></div>
-                    <div style="min-width: 100%; scroll-snap-align: start;"><img src="YOUR_ABERCROMBIE_2" style="width: 100%; border-radius: 20px;"></div>
-                </div>
-                <h2>Abercrombie Heritage Fur-Trim Jacket</h2>
-                <span class="price-tag">Ksh 1,500</span>
-                <p class="description-text">Iconic navy zip-up with premium faux-fur lined hood and collegiate applique branding.</p>
-                <button class="add-btn" onclick="addToCart('Abercrombie Fur Jacket', 1500)">Add to Cart 🛒</button>
-            </div>
+        <section class="store-details">
+            <h3>🩷 THE STORE POLICIES</h3>
+            <p><strong>Authenticity:</strong> All pieces are hand-picked, curated archives. We prioritize quality over quantity.</p>
+            <p><strong>Booking:</strong> A 50% deposit secures your item immediately. First pay, first serve.</p>
+            <p><strong>Deliveries:</strong> Dispatched within Nairobi via our dedicated riders. Track your order on TikTok DMs.</p>
+        </section>
 
-            <section class="policy-section">
-                <h3>🩷 STORE POLICIES</h3>
-                <div class="policy-point"><strong>1. 50% Booking Deposit</strong><p>Required to secure items via M-Pesa.</p></div>
-                <div class="policy-point"><strong>2. TikTok Verification</strong><p>Send screenshot to confirm delivery.</p></div>
-                <div class="policy-point"><strong>3. Quick Delivery</strong><p>Rider dispatched to your pinned location.</p></div>
-            </section>
-        </main>
-    </div>
+        <div class="nockturnal">
+            <div class="nock-text">POWERED BY NOCKTURNAL</div>
+        </div>
+    </main>
 
     <div class="drawer" id="cart">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 30px;">
-            <h2 style="font-family:'Unbounded'; font-size:1.1rem;">YOUR BAG 🛒</h2>
-            <button onclick="toggleCart()" style="background:none; border:none; font-size:2.5rem; cursor:pointer;">&times;</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+            <h2 style="font-family:'Unbounded'; font-size:1.1rem; color:var(--petal-pink);">YOUR SELECTION 🩷</h2>
+            <button onclick="toggleCart()" style="background:#000; color:#fff; border:none; width:45px; height:45px; border-radius:50%; font-weight:800; cursor:pointer; font-size:1.2rem;">&times;</button>
         </div>
+        
         <div id="cart-list"></div>
-        <div id="checkout-form" style="display:none; margin-top:30px;">
-            <input type="text" id="cust-name" placeholder="Enter Your Name">
-            <div class="location-kit">
-                <button class="gps-trigger" id="gpsBtn" onclick="getLocation()">📍 PIN GPS LOCATION</button>
-                <input type="text" id="cust-loc" placeholder="Estate / House Number" style="margin-top:10px;">
+
+        <div id="checkout-section" style="display:none;">
+            <div class="checkout-box">
+                <h3 style="margin:0 0 25px 0; font-size:0.9rem; text-align:center; color:var(--petal-pink);">SHIPPING DETAILS</h3>
+                <input type="text" id="cust-name" placeholder="Name">
+                <input type="text" id="cust-loc" placeholder="Location (Nairobi Estate)">
+                
+                <div class="receipt-card">
+                    <span class="receipt-label">50% BOOKING DEPOSIT</span>
+                    <div class="total-glow" id="dep-total">Ksh 0</div>
+                </div>
+
+                <button class="add-btn" onclick="openPayment()">PROCEED TO M-PESA</button>
             </div>
-            <div style="background: #fff9fb; padding: 25px; border-radius: 25px; border: 1.5px solid var(--petal-pink); text-align:center;">
-                <span style="font-weight:900; font-size:1.5rem; color:var(--ios-green);" id="dep-total">Ksh 0</span>
-            </div>
-            <button class="add-btn" style="margin-top:25px;" onclick="openPayment()">PROCEED TO BOOKING</button>
         </div>
     </div>
 
     <div class="modal" id="payModal">
         <div class="modal-inner">
-            <h3 style="font-family:'Unbounded'; font-size:0.9rem;">M-PESA PAYMENT</h3>
-            <div class="mpesa-receipt">
-                <div style="font-size: 1.8rem; font-weight: 900;" id="phoneDisp">0758361303</div>
+            <div style="background:var(--petal-pink); color:#fff; display:inline-block; padding:10px 20px; border-radius:15px; font-size:0.7rem; font-weight:900; margin-bottom:20px;">BOOKING PORTAL</div>
+            <h3 style="font-family:'Unbounded'; font-size:0.9rem;">TAP TO COPY NUMBER</h3>
+            
+            <div class="pay-number-box" onclick="copyNumber()">
+                <span class="copy-tag" id="copyLabel">TAP TO COPY</span>
+                <div style="font-size:2.2rem; font-weight:900; letter-spacing:2px; color:var(--text);" id="payNum">0758361303</div>
             </div>
-            <strong id="payAmt" style="font-size: 1.4rem; color:var(--ios-green);">Ksh 0</strong>
-            <button class="add-btn" style="margin-top:20px;" onclick="copyAndDial()">COPY & PAY</button>
-            <button class="add-btn" style="background:#000; margin-top:12px;" onclick="window.location.href='https://www.tiktok.com/@petalthrift.co'">DM SCREENSHOT</button>
-            <button onclick="document.getElementById('payModal').style.display='none'" style="background:none; border:none; color:#999; margin-top:20px; cursor:pointer;">GO BACK</button>
+
+            <p style="font-size:0.8rem; color:var(--sub-text); margin-bottom:20px;">1. Copy the number.<br>2. Open M-Pesa dialer.<br>3. Send 50% deposit.<br>4. Send DM screenshot.</p>
+            
+            <button class="add-btn" style="background:#000; margin-bottom:12px;" onclick="window.location.href='tel:*334#'">OPEN M-PESA DIALER</button>
+            <button class="add-btn" onclick="window.location.href='https://www.tiktok.com/@petalthrift.co'">SEND SCREENSHOT (TIKTOK)</button>
+            
+            <button onclick="document.getElementById('payModal').style.display='none'" style="background:none; border:none; color:#bbb; margin-top:30px; font-weight:700; cursor:pointer;">CANCEL</button>
         </div>
     </div>
 
     <script>
-        const targetDate = new Date("May 9, 2026 16:00:00").getTime();
-        function updateTimer() {
-            const now = new Date().getTime();
-            const diff = targetDate - now;
-            if (diff <= 0) { unlock(); return; }
-            document.getElementById("d").innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            document.getElementById("h").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            document.getElementById("m").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            document.getElementById("s").innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-        }
-        setInterval(updateTimer, 1000);
-        updateTimer();
-
-        // --- THE MISSING SECRET DOOR CODE ---
-        let count_door = 0;
-        function secretCode() {
-            count_door++;
-            if (count_door === 5) {
-                unlock();
-            }
-            setTimeout(() => { count_door = 0; }, 2000);
-        }
-
-        function unlock() {
-            document.getElementById('timer-overlay').style.display = 'none';
-            document.getElementById('locked-wrapper').style.filter = 'none';
-            document.getElementById('locked-wrapper').style.pointerEvents = 'auto';
-            document.getElementById('locked-wrapper').style.userSelect = 'auto';
-        }
-
+        // Cart Logic
         let bag = [];
-        const adminPhone = "0758361303";
         function toggleCart() { document.getElementById('cart').classList.toggle('open'); }
-        function addToCart(name, price) {
-            bag.push({name, price});
-            render();
+        
+        function addToCart(name, price, img) {
+            bag.push({name, price, img});
+            renderBag();
             if(!document.getElementById('cart').classList.contains('open')) toggleCart();
         }
-        function render() {
+
+        function renderBag() {
             const list = document.getElementById('cart-list');
-            const form = document.getElementById('checkout-form');
+            const section = document.getElementById('checkout-section');
             document.getElementById('count').innerText = bag.length;
-            if(bag.length === 0) { list.innerHTML = `<p style="text-align:center; color:#ccc; margin-top:60px;">Bag empty.</p>`; form.style.display = 'none'; return; }
-            form.style.display = 'block';
+            
+            if(bag.length === 0) {
+                list.innerHTML = `<div style="text-align:center; padding-top:100px; color:#bbb; font-weight:700;">Bag is empty 😔</div>`;
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
             list.innerHTML = bag.map((item, i) => `
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; background:#fff; padding:20px; border-radius:20px; border: 1px solid #f2f2f7;">
-                    <div><div style="font-weight:800;">${item.name}</div><div style="color:var(--ios-green);">Ksh ${item.price}</div></div>
-                    <button onclick="removeItem(${i})" style="color:var(--petal-pink); background:none; border:none; font-weight:800;">REMOVE</button>
+                <div class="bag-item">
+                    <img src="${item.img}" class="bag-img">
+                    <div style="flex-grow:1;">
+                        <div style="font-weight:900; font-size:0.85rem;">${item.name}</div>
+                        <div style="color:var(--ios-green); font-weight:800; font-size:0.85rem;">Ksh ${item.price}</div>
+                    </div>
+                    <button onclick="removeItem(${i})" style="background:none; border:none; color:var(--petal-pink); font-size:1.6rem; cursor:pointer;">&times;</button>
                 </div>
             `).join('');
-            let total = bag.reduce((s, i) => s + i.price, 0);
+
+            let total = bag.reduce((sum, item) => sum + item.price, 0);
             document.getElementById('dep-total').innerText = `Ksh ${total / 2}`;
-            document.getElementById('payAmt').innerText = `Ksh ${total / 2}`;
         }
-        function removeItem(i) { bag.splice(i, 1); render(); }
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((pos) => {
-                    document.getElementById('gpsBtn').style.background = "#34c759";
-                    document.getElementById('gpsBtn').innerText = "✓ PINNED";
-                });
-            }
+
+        function removeItem(i) {
+            bag.splice(i, 1);
+            renderBag();
         }
+
+        // Payment Logic
         function openPayment() {
-            if(!document.getElementById('cust-name').value || !document.getElementById('cust-loc').value) return alert("Missing info!");
+            if(!document.getElementById('cust-name').value || !document.getElementById('cust-loc').value) {
+                return alert("Fill in your name and location 🩷");
+            }
             document.getElementById('payModal').style.display = 'flex';
         }
-        function copyAndDial() {
-            navigator.clipboard.writeText(adminPhone);
-            alert("Copied!");
-            window.location.href = "tel:*334#";
+
+        function copyNumber() {
+            const num = document.getElementById('payNum').innerText;
+            navigator.clipboard.writeText(num);
+            const label = document.getElementById('copyLabel');
+            label.innerText = "COPIED!";
+            label.style.background = "#000";
+            setTimeout(() => {
+                label.innerText = "TAP TO COPY";
+                label.style.background = "var(--petal-pink)";
+            }, 2000);
         }
     </script>
 </body>
